@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd"
+       default-autowire="byName">
+
+    <!--扫描注解的Bean-->
+    <context:component-scan base-package="com.member.controller,com.member.service"/>
+
+    <!--begin  该事务声明在 application-context.xml 没有任何效果-->
+    <!--声明式事务-->
+    <bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" name="transactionManager"/>
+    <!--声明式事务管理-->
+    <!--已配置 default-autowire="byName" 根据名字自动注入 可不配置属性 transaction-manager="transactionManager"-->
+    <tx:advice id="interceptor" transaction-manager="transactionManager">
+        <!--配置拦截属性-->
+        <tx:attributes>
+            <!--REQUIRED：支持当前事务，如果当前没有事务，就新建一个事务。这是最常见的选择。-->
+            <!--SUPPORTS：支持当前事务，如果当前没有事务，就以非事务方式执行。-->
+            <!--MANDATORY：支持当前事务，如果当前没有事务，就抛出异常。-->
+            <!--REQUIRES_NEW：新建事务，如果当前存在事务，把当前事务挂起。-->
+            <!--NOT_SUPPORTED：以非事务方式执行操作，如果当前存在事务，就把当前事务挂起。-->
+            <!--NEVER：以非事务方式执行，如果当前存在事务，则抛出异常。-->
+            <!--NESTED：支持当前事务，如果当前事务存在，则执行一个嵌套事务，如果当前没有事务，就新建一个事务。-->
+            <tx:method name="add*"/>
+            <tx:method name="update*"/>
+            <tx:method name="del*"/>
+            <!--配置 get前缀的方法 只读并不支持-->
+            <tx:method name="get*" read-only="true" propagation="NOT_SUPPORTED"/>
+        </tx:attributes>
+    </tx:advice>
+    <!--配置面向切面-->
+    <aop:config>
+        <!--声明一个切入点-->
+        <aop:pointcut id="pointcut" expression="execution(* com.member.service.*.*(..))"/>
+        <!--定义切面-->
+        <aop:advisor advice-ref="interceptor" pointcut-ref="pointcut"/>
+    </aop:config>
+    <!--end  该事务声明在 application-context.xml 没有任何效果-->
+
+    <!--内部资源视图解析器-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!--前缀解析-->
+        <property name="prefix" value="/WEB-INF/"/>
+        <!--后缀解析-->
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!--拦截器配置-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!--拦截所有url请求-->
+            <mvc:mapping path="/member/**"/>
+            <!--放过登录方法-->
+            <mvc:exclude-mapping path="/member/login"/>
+            <!--放过 样式，图片 等请求路径-->
+            <!--<mvc:exclude-mapping path="/css/**"/>-->
+            <!--<mvc:exclude-mapping path="/fonts/**"/>-->
+            <!--<mvc:exclude-mapping path="/images/**"/>-->
+            <!--<mvc:exclude-mapping path="/js/**"/>-->
+            <!--<mvc:exclude-mapping path="/lib/**"/>-->
+            <bean class="com.member.interceptor.MyInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+    <!--使 @Controller 注解生效-->
+    <mvc:annotation-driven/>
+    <!--配置静态文件资源的访问-->
+    <!--否则 WEB-INF 下的 css 等资源文件访问不到-->
+    <mvc:resources mapping="/**" location="/WEB-INF/"/>
+</beans>
