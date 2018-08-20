@@ -24,7 +24,7 @@ public class WebConfig extends WebMvcConfigurationSupport {
     public void addInterceptors(InterceptorRegistry registry) {
         InterceptorRegistration addInterceptor = registry.addInterceptor(getLoginInterceptor());
         //排除的路径
-        addInterceptor.excludePathPatterns("/login");
+        addInterceptor.excludePathPatterns("/login**");
         //支付宝测试接口
         addInterceptor.excludePathPatterns("/alipay**");
         addInterceptor.excludePathPatterns("/static/**");

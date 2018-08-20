@@ -5,35 +5,41 @@ import com.lottery.service.users.UsersService;
 import com.lottery.util.MD5Util;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class UsersContorller {
     @Resource
     private UsersService usersService;
 
-    @RequestMapping("/login")
-    public ModelAndView login(HttpSession session, Users users) {
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("login");
-        if (null != users.getName()) {
-            Users user = usersService.getUser(users);
-            if (user != null) {
-                String pwd = MD5Util.EncoderByMd5(users.getPassword());
-                if (pwd.equals(user.getPassword())) {
-                    session.setAttribute("loginUser", user);
-                    mv.setViewName("index");
-                } else {
-                    mv.addObject("msg", "密码不正确，请重新输入");
-                }
+    @RequestMapping(value = "/login",method=RequestMethod.POST)
+    @ResponseBody
+    public Object loginajax(HttpSession session, Users users) {
+        Map<String, String> map = new HashMap<>();
+        Users user = usersService.getUser(users);
+        if (user != null) {
+            String pwd = MD5Util.EncoderByMd5(users.getPassword());
+            if (pwd.equals(user.getPassword())) {
+                session.setAttribute("loginUser", user);
             } else {
-                mv.addObject("msg", "账号不存在，请重新输入");
+                map.put("msg", "false");
             }
+        } else {
+            map.put("msg", "null");
         }
-        return mv;
+        return map;
+    }
+
+    @RequestMapping("/login.html")
+    public String login(HttpSession session, Users users) {
+        return "login";
     }
 
     @RequestMapping("/userOut")

@@ -11,6 +11,7 @@ public class LotteryControl {
         return "index";
     }
 
+//
 //    @RequestMapping("/{path}")
 //    public String lottery(@PathVariable("path") String path) {
 //        return path;
