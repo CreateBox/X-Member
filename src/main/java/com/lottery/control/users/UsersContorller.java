@@ -16,28 +16,28 @@ public class UsersContorller {
     private UsersService usersService;
 
     @RequestMapping("/login")
-    public ModelAndView login(HttpSession session, Users users){
+    public ModelAndView login(HttpSession session, Users users) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("login");
-        if (null!=users.getName()){
+        if (null != users.getName()) {
             Users user = usersService.getUser(users);
-            if(user!=null){
+            if (user != null) {
                 String pwd = MD5Util.EncoderByMd5(users.getPassword());
-                if(pwd.equals(user.getPassword())){
-                    session.setAttribute("loginUser",user);
+                if (pwd.equals(user.getPassword())) {
+                    session.setAttribute("loginUser", user);
                     mv.setViewName("index");
-                }else{
-                    mv.addObject("msg","密码不正确，请重新输入");
+                } else {
+                    mv.addObject("msg", "密码不正确，请重新输入");
                 }
-            }else{
-                mv.addObject("msg","账号不存在，请重新输入");
+            } else {
+                mv.addObject("msg", "账号不存在，请重新输入");
             }
         }
         return mv;
     }
 
     @RequestMapping("/userOut")
-    public String userOut(HttpSession session){
+    public String userOut(HttpSession session) {
         session.invalidate();
         return "login";
     }
