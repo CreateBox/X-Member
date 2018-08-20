@@ -13,7 +13,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         HttpSession session = request.getSession();
 
         //判断是否已有该用户登录的session
-        if (session.getAttribute("sessionUser") != null) {
+        if (session.getAttribute("loginUser") != null) {
             return true;
         }
         //跳转到登录页
