@@ -12,7 +12,7 @@ public class WebConfig extends WebMvcConfigurationSupport {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
         super.addResourceHandlers(registry);
     }
 
@@ -24,9 +24,10 @@ public class WebConfig extends WebMvcConfigurationSupport {
     public void addInterceptors(InterceptorRegistry registry) {
         InterceptorRegistration addInterceptor = registry.addInterceptor(getLoginInterceptor());
         //排除的路径
-//        addInterceptor.excludePathPatterns("/");
+        addInterceptor.excludePathPatterns("/login");
+        addInterceptor.excludePathPatterns("/static/**");
         //拦截所有路径
-        addInterceptor.addPathPatterns("/lottery/**");
+        addInterceptor.addPathPatterns("/**");
     }
 
 }
