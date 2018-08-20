@@ -3,7 +3,6 @@ package com.lottery.pojo;
 import java.util.Date;
 
 public class Users {
-
   private Integer id;
   private String name;
   private String password;
@@ -19,7 +18,7 @@ public class Users {
   private Date registerTime;
   private Date lastLoginTime;
   private Integer loginCount;
-  private Integer userType;
+  private Usertype userType;
   private String payName;
   private String payCardNumber;
   private double balance;
@@ -145,11 +144,11 @@ public class Users {
     this.loginCount = loginCount;
   }
 
-  public Integer getUserType() {
+  public Usertype getUserType() {
     return userType;
   }
 
-  public void setUserType(Integer userType) {
+  public void setUserType(Usertype userType) {
     this.userType = userType;
   }
 

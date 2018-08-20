@@ -2,11 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lottery.mapper.UsersMapper">
-    <select id="getUser" resultType="Users">
-        select * from users
+
+    <resultMap id="userMap" type="Users">
+        <id column="id" property="id"/>
+        <association property="userType" javaType="Usertype">
+            <id column="tid" property="id"/>
+        </association>
+    </resultMap>
+
+    <select id="getUser" resultMap="userMap">
+        select u.*,t.*,t.id tid from users u,usertype t
         <trim prefix="where" prefixOverrides="and">
+            u.usertype = t.id
             <if test="name != null and name != ''">
-                `name` = #{name}
+               and `name` = #{name}
             </if>
         </trim>
     </select>
