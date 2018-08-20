@@ -9,5 +9,8 @@
         <module name="X-Member" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="X-Member" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
