@@ -19,7 +19,7 @@ public class UsersContorller {
     @Resource
     private UsersService usersService;
 
-    @RequestMapping(value = "/login",method=RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public Object loginajax(HttpSession session, Users users) {
         Map<String, String> map = new HashMap<>();
@@ -38,7 +38,7 @@ public class UsersContorller {
     }
 
     @RequestMapping("/login.html")
-    public String login(HttpSession session, Users users) {
+    public String login() {
         return "login";
     }
 
