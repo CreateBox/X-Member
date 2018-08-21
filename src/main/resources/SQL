@@ -1,0 +1,39 @@
+DROP DATABASE IF EXISTS lotterySystem;
+CREATE DATABASE lotterySystem CHARSET = utf8;
+USE lotterySystem;
+
+DROP TABLE IF EXISTS users;
+CREATE TABLE users
+(
+	id INT PRIMARY KEY AUTO_INCREMENT COMMENT '用户ID',
+	`name` VARCHAR(30) NOT NULL COMMENT '用户名',
+	`password` VARCHAR(50) NOT NULL COMMENT '用户密码',
+	realityName VARCHAR(20) COMMENT '真实姓名',
+	sex VARCHAR(2) NOT NULL COMMENT '性别',
+	birthDay DATE NOT NULL COMMENT '出生日期',
+	idCardNumber VARCHAR(18) COMMENT '身份证号码',
+	address VARCHAR(50) COMMENT '用户地址',
+	Email VARCHAR(50) COMMENT '用户邮箱',
+	QQ VARCHAR(20) COMMENT '用户QQ',
+	telephone VARCHAR(20) COMMENT '联系电话',
+	mobile VARCHAR(20) COMMENT '移动电话',
+	registerTime DATETIME NOT NULL COMMENT '注册时间',
+	lastLoginTime DATETIME COMMENT '最后一次登录时间',
+	loginCount INT COMMENT '登录次数',
+	userType INT NOT NULL COMMENT '用户类型',
+	payName VARCHAR(20) COMMENT '支付名称',
+	payCardNumber VARCHAR(20) COMMENT '支付号',
+	balance DECIMAL(12,2) DEFAULT 0.00 COMMENT '账户余额',
+	freeze DECIMAL(12,2) DEFAULT 0.00 COMMENT '冻结资金'
+);
+
+INSERT INTO users VALUES(DEFAULT,'admin',MD5('123456'),'管理员','男',NOW(),NULL,NULL,NULL,NULL,NULL,NULL,NOW(),NOW(),1,1,NULL,NULL,DEFAULT,DEFAULT)
+
+DROP TABLE IF EXISTS userType;
+CREATE TABLE userType
+(
+	id INT PRIMARY KEY AUTO_INCREMENT COMMENT '用户类型ID',
+	typeName VARCHAR(20) NOT NULL COMMENT '类型名称'
+);
+
+INSERT INTO userType VALUES(DEFAULT,'管理员'),(DEFAULT,'会员');
