@@ -19,4 +19,16 @@
             </if>
         </trim>
     </select>
+
+    <update id="alterUser">
+        update users
+        <trim prefix="set" suffixOverrides="," suffix="where id = #{id}">
+            <if test="lastLoginTime != null">
+                lastLoginTime = #{lastLoginTime},
+            </if>
+            <if test="loginCount != null and loginCount != ''">
+                loginCount = #{loginCount},
+            </if>
+        </trim>
+    </update>
 </mapper>

@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +29,9 @@ public class UsersContorller {
             String pwd = MD5Util.EncoderByMd5(users.getPassword());
             if (pwd.equals(user.getPassword())) {
                 session.setAttribute("loginUser", user);
+                user.setLastLoginTime(new Date());
+                user.setLoginCount(user.getLoginCount()+1);
+                usersService.alterUser(user);
             } else {
                 map.put("msg", "false");
             }
