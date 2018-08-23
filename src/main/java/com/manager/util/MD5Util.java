@@ -1,4 +1,4 @@
-package com.lottery.util;
+package com.manager.util;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

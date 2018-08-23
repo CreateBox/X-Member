@@ -1,13 +1,12 @@
-package com.lottery.control.users;
+package com.manager.control.users;
 
-import com.lottery.pojo.Users;
-import com.lottery.service.users.UsersService;
-import com.lottery.util.MD5Util;
+import com.manager.pojo.Users;
+import com.manager.service.users.UsersService;
+import com.manager.util.MD5Util;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;

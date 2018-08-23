@@ -1,4 +1,4 @@
-package com.lottery.control;
+package com.manager.control;
 
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
@@ -6,7 +6,7 @@ import com.alipay.api.AlipayRequest;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.*;
-import com.lottery.config.AlipayConfig;
+import com.manager.config.AlipayConfig;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

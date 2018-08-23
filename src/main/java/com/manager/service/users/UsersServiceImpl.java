@@ -1,8 +1,7 @@
-package com.lottery.service.users;
+package com.manager.service.users;
 
-import com.lottery.mapper.UsersMapper;
-import com.lottery.pojo.Users;
-import com.lottery.service.users.UsersService;
+import com.manager.mapper.UsersMapper;
+import com.manager.pojo.Users;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

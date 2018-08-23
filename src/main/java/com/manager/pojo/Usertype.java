@@ -1,4 +1,4 @@
-package com.lottery.pojo;
+package com.manager.pojo;
 
 
 public class Usertype {

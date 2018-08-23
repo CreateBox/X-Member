@@ -1,6 +1,6 @@
-package com.lottery.service.users;
+package com.manager.service.users;
 
-import com.lottery.pojo.Users;
+import com.manager.pojo.Users;
 
 public interface UsersService {
     Users getUser(Users users);

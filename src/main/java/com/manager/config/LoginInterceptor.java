@@ -1,4 +1,4 @@
-package com.lottery.config;
+package com.manager.config;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 

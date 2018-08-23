@@ -1,6 +1,6 @@
-package com.lottery.mapper;
+package com.manager.mapper;
 
-import com.lottery.pojo.Users;
+import com.manager.pojo.Users;
 
 public interface UsersMapper {
     Users getUser(Users users);

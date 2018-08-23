@@ -1,4 +1,4 @@
-package com.lottery.config;
+package com.manager.config;
 
 import java.io.FileWriter;
 import java.io.IOException;

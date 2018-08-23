@@ -1,4 +1,4 @@
-package com.lottery.config;
+package com.manager.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
