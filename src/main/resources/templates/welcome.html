@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>欢迎页面-X-admin2.0</title>
@@ -11,8 +11,8 @@
 </head>
 <body>
 <div class="x-body layui-anim layui-anim-up">
-    <blockquote class="layui-elem-quote">欢迎管理员：
-        <span class="x-red">test</span>！当前时间:<span id="time"></span>
+    <blockquote class="layui-elem-quote">欢迎<label th:text="${session.loginUser.userType.typeName}"/>：
+        <span class="x-red"><label th:text="${session.loginUser.name}"/></span>！当前时间:<span id="time"></span>
     </blockquote>
     <fieldset class="layui-elem-field">
         <legend>数据统计</legend>
@@ -167,7 +167,7 @@
     <blockquote class="layui-elem-quote layui-quote-nm">感谢layui,百度Echarts,jquery,本系统由x-admin提供技术支持。</blockquote>
 </div>
 <!-- jQuery -->
-<script src="./lib/jquery/dist/jquery.min.js"></script>
+<script src="static/lib/jquery/dist/jquery.min.js"></script>
 <script>
     var _hmt = _hmt || [];
     (function () {
