@@ -1,39 +1,60 @@
-DROP DATABASE IF EXISTS lotterySystem;
-CREATE DATABASE lotterySystem CHARSET = utf8;
-USE lotterySystem;
+DROP DATABASE IF EXISTS ManageDB;
+CREATE DATABASE ManageDB CHARSET = utf8;
+USE ManageDB;
 
-DROP TABLE IF EXISTS users;
-CREATE TABLE users
-(
-	id INT PRIMARY KEY AUTO_INCREMENT COMMENT '用户ID',
-	`name` VARCHAR(30) NOT NULL COMMENT '用户名',
-	`password` VARCHAR(50) NOT NULL COMMENT '用户密码',
-	realityName VARCHAR(20) COMMENT '真实姓名',
-	sex VARCHAR(2) NOT NULL COMMENT '性别',
-	birthDay DATE NOT NULL COMMENT '出生日期',
-	idCardNumber VARCHAR(18) COMMENT '身份证号码',
-	address VARCHAR(50) COMMENT '用户地址',
-	Email VARCHAR(50) COMMENT '用户邮箱',
-	QQ VARCHAR(20) COMMENT '用户QQ',
-	telephone VARCHAR(20) COMMENT '联系电话',
-	mobile VARCHAR(20) COMMENT '移动电话',
-	registerTime DATETIME NOT NULL COMMENT '注册时间',
-	lastLoginTime DATETIME COMMENT '最后一次登录时间',
-	loginCount INT COMMENT '登录次数',
-	userType INT NOT NULL COMMENT '用户类型',
-	payName VARCHAR(20) COMMENT '支付名称',
-	payCardNumber VARCHAR(20) COMMENT '支付号',
-	balance DECIMAL(12,2) DEFAULT 0.00 COMMENT '账户余额',
-	freeze DECIMAL(12,2) DEFAULT 0.00 COMMENT '冻结资金'
+DROP TABLE IF EXISTS data_dictionary;
+CREATE TABLE `data_dictionary`(
+	dd_id INT PRIMARY KEY AUTO_INCREMENT ,
+	dd_typeCode VARCHAR(20) NOT NULL COMMENT '字典编码',
+	dd_typeName VARCHAR(20) NOT NULL COMMENT '字典名称',
+	dd_valueId INT NOT NULL COMMENT '数据id，提供的外键id',
+	dd_valueName VARCHAR(20) NOT NULL COMMENT '数据值',
+	dd_operationId INT NOT NULL COMMENT '操作人id',
+	dd_lastTime DATE NOT NULL COMMENT '最后修改时间',
+	dd_comment VARCHAR(200) COMMENT '备注'
 );
 
-INSERT INTO users VALUES(DEFAULT,'admin',MD5('123456'),'管理员','男',NOW(),NULL,NULL,NULL,NULL,NULL,NULL,NOW(),NOW(),1,1,NULL,NULL,DEFAULT,DEFAULT);
-
-DROP TABLE IF EXISTS userType;
-CREATE TABLE userType
+DROP TABLE IF EXISTS employees;
+CREATE TABLE employees
 (
-	id INT PRIMARY KEY AUTO_INCREMENT COMMENT '用户类型ID',
-	typeName VARCHAR(20) NOT NULL COMMENT '类型名称'
+	e_id INT PRIMARY KEY AUTO_INCREMENT COMMENT '员工ID',
+	e_loginName VARCHAR(20) NOT NULL COMMENT '员工账号',
+	e_pwd VARCHAR(50) NOT NULL COMMENT '密码',
+	e_realName VARCHAR(20) NOT NULL COMMENT '真实姓名',
+	e_sex INT NOT NULL COMMENT '性别',
+	e_phone VARCHAR(20) COMMENT '联系电话',
+	e_role INT COMMENT '系统角色',
+	e_deptId INT COMMENT '所属部门',
+	e_status INT NOT NULL DEFAULT 1 COMMENT '当前状态',
+	e_createTime DATETIME NOT NULL COMMENT '创建时间',
+	e_modifyId INT COMMENT '操作人',
+	e_modifyTime DATETIME COMMENT '修改时间',
+	e_lastLoginTime DATETIME COMMENT '最后登录时间',
+	e_description VARCHAR(255) COMMENT '备注信息'
 );
 
-INSERT INTO userType VALUES(DEFAULT,'管理员'),(DEFAULT,'会员');
+INSERT INTO employees VALUES(DEFAULT,'admin',MD5('123456'),'尚鸿运',1,'13312341234',1,1,1,NOW(),1,NULL,NULL,NULL);
+
+DROP TABLE IF EXISTS dept;
+CREATE TABLE dept
+(
+	d_id INT PRIMARY KEY AUTO_INCREMENT COMMENT '部门ID',
+	d_code VARCHAR(20) NOT NULL COMMENT '部门编号',
+	d_name VARCHAR(20) NOT NULL COMMENT '部门名称'
+);
+
+INSERT INTO dept VALUES(DEFAULT,'001','综合部');
+
+DROP TABLE IF EXISTS role;
+CREATE TABLE role
+(
+	r_id INT PRIMARY KEY AUTO_INCREMENT COMMENT '角色ID',
+	r_code VARCHAR(20) NOT NULL COMMENT '角色编码',
+	r_name VARCHAR(20) NOT NULL COMMENT '角色名称',
+	r_deptNo INT NOT NULL COMMENT '所属部门',
+	r_modifyId INT COMMENT '操作人',
+	r_modifyTime DATETIME COMMENT '修改时间',
+	r_description VARCHAR(255) COMMENT '备注信息'
+);
+
+INSERT INTO role VALUES(DEFAULT,'001','管理员',1,1,NULL,NULL);
