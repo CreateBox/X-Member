@@ -1,7 +1,7 @@
 package com.manager.control.users;
 
-import com.manager.pojo.Users;
-import com.manager.service.users.UsersService;
+import com.manager.pojo.Employees;
+import com.manager.service.users.EmployeesService;
 import com.manager.util.MD5Util;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,22 +15,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-public class UsersContorller {
+public class EmployeesContorller {
     @Resource
-    private UsersService usersService;
+    private EmployeesService usersService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public Object loginajax(HttpSession session, Users users) {
+    public Object loginajax(HttpSession session, Employees employees) {
         Map<String, String> map = new HashMap<>();
-        Users user = usersService.getUser(users);
-        if (user != null) {
-            String pwd = MD5Util.EncoderByMd5(users.getPassword());
-            if (pwd.equals(user.getPassword())) {
-                session.setAttribute("loginUser", user);
-                user.setLastLoginTime(new Date());
-                user.setLoginCount(user.getLoginCount()+1);
-                usersService.alterUser(user);
+        Employees Employee = usersService.getEmployees(employees);
+        if (Employee != null) {
+            String pwd = MD5Util.EncoderByMd5(employees.getE_Pwd());
+            if (pwd.equals(Employee.getE_Pwd())) {
+                session.setAttribute("loginEmployee", Employee);
+                Employee.setE_LastLoginTime(new Date());
+                usersService.alterEmployees(Employee);
             } else {
                 map.put("msg", "false");
             }

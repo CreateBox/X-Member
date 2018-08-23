@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.manager.mapper.UsersMapper">
-
-    <resultMap id="userMap" type="Users">
-        <id column="id" property="id"/>
-        <association property="userType" javaType="Usertype">
-            <id column="tid" property="id"/>
+<mapper namespace="com.manager.mapper.EmployeesMapper">
+    <resultMap id="EmployeesMap" type="Employees">
+        <id column="e_id" property="e_Id"/>
+        <association property="e_ModifyId" javaType="Employees">
+            <id column="e_id" property="e_Id"/>
+        </association>
+        <association property="e_Role" javaType="Role">
+            <id column="r_id" property="r_Id"/>
+        </association>
+        <association property="e_DeptId" javaType="Dept">
+            <id column="d_id" property="d_Id"/>
         </association>
     </resultMap>
 
-    <select id="getUser" resultMap="userMap">
-        select u.*,t.*,t.id tid from users u,usertype t
+    <select id="getEmployees" resultMap="EmployeesMap">
+        select e.*,d.*,r.* from employees e,dept d, role r
         <trim prefix="where" prefixOverrides="and">
-            u.usertype = t.id
-            <if test="name != null and name != ''">
-               and `name` = #{name}
+            e.e_role = r.r_id and e.e_deptid = d.d_id and e.e_modifyId = e.e_id
+            <if test="e_LoginName != null and e_LoginName != ''">
+               and e_loginName = #{e_LoginName}
             </if>
         </trim>
     </select>
 
-    <update id="alterUser">
-        update users
-        <trim prefix="set" suffixOverrides="," suffix="where id = #{id}">
-            <if test="lastLoginTime != null">
-                lastLoginTime = #{lastLoginTime},
-            </if>
-            <if test="loginCount != null and loginCount != ''">
-                loginCount = #{loginCount},
+    <update id="alterEmployees">
+        update employees
+        <trim prefix="set" suffixOverrides="," suffix="where e_id = #{e_Id}">
+            <if test="e_LastLoginTime != null">
+                e_lastLoginTime = #{e_LastLoginTime},
             </if>
         </trim>
     </update>

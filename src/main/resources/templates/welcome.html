@@ -11,9 +11,9 @@
 </head>
 <body>
 <div class="x-body layui-anim layui-anim-up">
-    <blockquote class="layui-elem-quote">欢迎<label th:text="${session.loginUser.userType.typeName}"/>：
-        <span class="x-red"><label th:text="${session.loginUser.name}"/></span>！当前时间:<span id="time"></span>
-        <span style="float: right">上次登录时间:<label th:text="${#dates.format(session.loginUser.lastLoginTime)}"/></span>
+    <blockquote class="layui-elem-quote">欢迎<label th:text="${session.loginEmployee.e_Role.r_Name}"/>：
+        <span class="x-red"><label th:text="${session.loginEmployee.e_LoginName}"/></span>！当前时间:<span id="time"></span>
+        <span style="float: right">上次登录时间:<label th:text="${#dates.format(session.loginEmployee.e_LastLoginTime)}"/></span>
     </blockquote>
     <fieldset class="layui-elem-field">
         <legend>数据统计</legend>
