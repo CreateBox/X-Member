@@ -6,10 +6,11 @@ import java.util.Date;
 public class Employees {
 
     private Integer e_Id;
+    private String e_Code;
     private String e_LoginName;
     private String e_Pwd;
     private String e_RealName;
-    private Integer e_Sex;
+    private DataDictionary e_Sex;
     private String e_Phone;
     private Role e_Role;
     private Dept e_DeptId;
@@ -19,6 +20,21 @@ public class Employees {
     private Date e_ModifyTime;
     private String e_Description;
     private Date e_LastLoginTime;
+
+
+    public Employees(){}
+
+    public Employees(String loginName){
+        this.e_LoginName = loginName;
+    }
+
+    public String getE_Code() {
+        return e_Code;
+    }
+
+    public void setE_Code(String e_Code) {
+        this.e_Code = e_Code;
+    }
 
     public Date getE_LastLoginTime() {
         return e_LastLoginTime;
@@ -60,11 +76,11 @@ public class Employees {
         this.e_RealName = e_RealName;
     }
 
-    public Integer getE_Sex() {
+    public DataDictionary getE_Sex() {
         return e_Sex;
     }
 
-    public void setE_Sex(Integer e_Sex) {
+    public void setE_Sex(DataDictionary e_Sex) {
         this.e_Sex = e_Sex;
     }
 

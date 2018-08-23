@@ -13,12 +13,15 @@
         <association property="e_DeptId" javaType="Dept">
             <id column="d_id" property="d_Id"/>
         </association>
+        <association property="e_Sex" javaType="DataDictionary">
+            <id column="dd_id" property="dd_Id"/>
+        </association>
     </resultMap>
 
     <select id="getEmployees" resultMap="EmployeesMap">
-        select e.*,d.*,r.* from employees e,dept d, role r
+        select e.*,d.*,r.*,dd.* from employees e,dept d, role r,data_dictionary dd
         <trim prefix="where" prefixOverrides="and">
-            e.e_role = r.r_id and e.e_deptid = d.d_id and e.e_modifyId = e.e_id
+            e.e_role = r.r_id and e.e_deptid = d.d_id and e.e_modifyId = e.e_id and e.e_sex = dd.dd_valueId and dd.dd_typeCode='sex'
             <if test="e_LoginName != null and e_LoginName != ''">
                and e_loginName = #{e_LoginName}
             </if>
@@ -30,6 +33,12 @@
         <trim prefix="set" suffixOverrides="," suffix="where e_id = #{e_Id}">
             <if test="e_LastLoginTime != null">
                 e_lastLoginTime = #{e_LastLoginTime},
+            </if>
+            <if test="e_Phone != null and e_Phone != ''">
+                e_Phone = #{e_Phone},
+            </if>
+            <if test="e_Pwd != null and e_Pwd != ''">
+                e_Pwd = #{e_Pwd},
             </if>
         </trim>
     </update>

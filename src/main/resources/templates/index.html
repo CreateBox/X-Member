@@ -38,8 +38,8 @@
         <li class="layui-nav-item">
             <a href="javascript:;"><label th:text="${session.loginEmployee.e_LoginName}"/></a>
             <dl class="layui-nav-child"> <!-- 二级菜单 -->
-                <dd><a onclick="layer.msg('密码不正确，请重新输入')">个人信息</a></dd>
-                <dd><a onclick="x_admin_show('切换帐号','http://www.baidu.com')">切换帐号</a></dd>
+                <dd><a onclick="x_admin_show('个人信息','/jump/personalInfo',1000,500)">个人信息</a></dd>
+                <dd><a onclick="x_admin_show('修改密码','/jump/Change the password',600,500,true)">修改密码</a></dd>
                 <dd><a href="/userOut">退出</a></dd>
             </dl>
         </li>
@@ -61,49 +61,42 @@
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="member-list.html">
+                        <a _href="/jump/sysrole">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>角色管理</cite>
 
                         </a>
                     </li>
                     <li>
-                        <a _href="member-del.html">
+                        <a _href="/jump/sysorganization">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>组织结构</cite>
 
                         </a>
                     </li>
                     <li>
-                        <a _href="member-del.html">
+                        <a _href="/jump/sysemployees">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>员工管理</cite>
 
                         </a>
                     </li>
                     <li>
-                        <a _href="member-del.html">
+                        <a _href="/jump/sysThe announcement">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>公告管理</cite>
 
                         </a>
                     </li>
                     <li>
-                        <a _href="member-del.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>个人信息</cite>
-
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="member-del.html">
+                        <a _href="/jump/sysbasis">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>基础信息</cite>
 
                         </a>
                     </li>
                     <li>
-                        <a _href="member-del.html">
+                        <a _href="/jump/sysdictionary">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>数据字典</cite>
 
