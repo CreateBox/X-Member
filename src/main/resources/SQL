@@ -96,8 +96,8 @@ CREATE TABLE role
 
 INSERT INTO role VALUES(DEFAULT,'001','管理员',1,1,NULL,NULL);
 
-DROP TABLE IF EXISTS service;
-CREATE TABLE service
+DROP TABLE IF EXISTS Servicees;
+CREATE TABLE Servicees
 (
 	s_id INT PRIMARY KEY AUTO_INCREMENT COMMENT '服务ID',
 	s_name VARCHAR(30) NOT NULL COMMENT '服务名称',
@@ -108,18 +108,18 @@ CREATE TABLE service
 	s_processor INT NOT NULL COMMENT '待处理人'
 );
 
-INSERT INTO service VALUE(DEFAULT,'四川客户离心器售后服务',2,4,DEFAULT,1,1);
-INSERT INTO service VALUE(DEFAULT,'山东客户离心器安装服务',2,1,DEFAULT,1,1);
-INSERT INTO service VALUE(DEFAULT,'云南客户设备故障投诉服务',1,2,DEFAULT,1,1);
-INSERT INTO service VALUE(DEFAULT,'北京客户明洞设备安装服务',3,3,DEFAULT,1,1);
-INSERT INTO service VALUE(DEFAULT,'山东客户离心器安装服务',5,1,DEFAULT,1,1);
-INSERT INTO service VALUE(DEFAULT,'四川客户离心器售后服务',3,2,DEFAULT,1,1);
-INSERT INTO service VALUE(DEFAULT,'山东客户离心器安装服务',2,3,DEFAULT,1,1);
-INSERT INTO service VALUE(DEFAULT,'北京客户明洞设备安装服务',4,3,DEFAULT,1,1);
-INSERT INTO service VALUE(DEFAULT,'四川客户离心器售后服务',5,1,DEFAULT,1,1);
-INSERT INTO service VALUE(DEFAULT,'四川客户离心器售后服务',1,2,DEFAULT,1,1);
-INSERT INTO service VALUE(DEFAULT,'北京客户明洞设备安装服务',3,4,DEFAULT,1,1);
-INSERT INTO service VALUE(DEFAULT,'四川客户离心器售后服务',2,4,DEFAULT,1,1);
+INSERT INTO Servicees VALUE(DEFAULT,'四川客户离心器售后服务',2,4,DEFAULT,1,1);
+INSERT INTO Servicees VALUE(DEFAULT,'山东客户离心器安装服务',2,1,DEFAULT,1,1);
+INSERT INTO Servicees VALUE(DEFAULT,'云南客户设备故障投诉服务',1,2,DEFAULT,1,1);
+INSERT INTO Servicees VALUE(DEFAULT,'北京客户明洞设备安装服务',3,3,DEFAULT,1,1);
+INSERT INTO Servicees VALUE(DEFAULT,'山东客户离心器安装服务',5,1,DEFAULT,1,1);
+INSERT INTO Servicees VALUE(DEFAULT,'四川客户离心器售后服务',3,2,DEFAULT,1,1);
+INSERT INTO Servicees VALUE(DEFAULT,'山东客户离心器安装服务',2,3,DEFAULT,1,1);
+INSERT INTO Servicees VALUE(DEFAULT,'北京客户明洞设备安装服务',4,3,DEFAULT,1,1);
+INSERT INTO Servicees VALUE(DEFAULT,'四川客户离心器售后服务',5,1,DEFAULT,1,1);
+INSERT INTO Servicees VALUE(DEFAULT,'四川客户离心器售后服务',1,2,DEFAULT,1,1);
+INSERT INTO Servicees VALUE(DEFAULT,'北京客户明洞设备安装服务',3,4,DEFAULT,1,1);
+INSERT INTO Servicees VALUE(DEFAULT,'四川客户离心器售后服务',2,4,DEFAULT,1,1);
 
 DROP TABLE IF EXISTS service_FAQ;
 CREATE TABLE service_FAQ
