@@ -5,10 +5,10 @@ USE ManageDB;
 DROP TABLE IF EXISTS data_dictionary;
 CREATE TABLE `data_dictionary`(
 	dd_id INT PRIMARY KEY AUTO_INCREMENT ,
-	dd_typeCode VARCHAR(20) NOT NULL COMMENT '字典编码',
-	dd_typeName VARCHAR(20) NOT NULL COMMENT '字典名称',
+	dd_typeCode VARCHAR(100) NOT NULL COMMENT '字典编码',
+	dd_typeName VARCHAR(100) NOT NULL COMMENT '字典名称',
 	dd_valueId INT NOT NULL COMMENT '数据id，提供的外键id',
-	dd_valueName VARCHAR(20) NOT NULL COMMENT '数据值',
+	dd_valueName VARCHAR(100) NOT NULL COMMENT '数据值',
 	dd_operationId INT NOT NULL COMMENT '操作人id',
 	dd_lastTime DATE NOT NULL COMMENT '最后修改时间',
 	dd_comment VARCHAR(200) COMMENT '备注'
@@ -36,6 +36,20 @@ INSERT INTO data_dictionary VALUE(DEFAULT,'customer_type','客户类型',4,'普�
 INSERT INTO data_dictionary VALUE(DEFAULT,'customer_status','客户状态',1,'启用',1,NOW(),NULL);
 INSERT INTO data_dictionary VALUE(DEFAULT,'customer_status','客户状态',2,'禁用',1,NOW(),NULL);
 INSERT INTO data_dictionary VALUE(DEFAULT,'customer_status','客户状态',3,'流失',1,NOW(),NULL);
+
+INSERT INTO data_dictionary VALUE(DEFAULT,'order_status','订单状态',1,'等待付款',1,NOW(),NULL);
+INSERT INTO data_dictionary VALUE(DEFAULT,'order_status','订单状态',2,'等待收货',1,NOW(),NULL);
+INSERT INTO data_dictionary VALUE(DEFAULT,'order_status','订单状态',3,'已完成',1,NOW(),NULL);
+INSERT INTO data_dictionary VALUE(DEFAULT,'order_status','订单状态',4,'已取消',1,NOW(),NULL);
+
+INSERT INTO data_dictionary VALUE(DEFAULT,'order_type','订单类型',1,'普通订单',1,NOW(),NULL);
+INSERT INTO data_dictionary VALUE(DEFAULT,'order_type','订单类型',2,'加急订单',1,NOW(),NULL);
+
+INSERT INTO data_dictionary VALUE(DEFAULT,'customer_distribution','分配状态',1,'已分配',1,NOW(),NULL);
+INSERT INTO data_dictionary VALUE(DEFAULT,'customer_distribution','分配状态',2,'未分配',1,NOW(),NULL);
+
+INSERT INTO data_dictionary VALUE(DEFAULT,'emp_status','员工状态',2,'正常',1,NOW(),NULL);
+INSERT INTO data_dictionary VALUE(DEFAULT,'emp_status','员工状态',2,'禁用',1,NOW(),NULL);
 
 DROP TABLE IF EXISTS employees;
 CREATE TABLE employees
@@ -82,16 +96,30 @@ CREATE TABLE role
 
 INSERT INTO role VALUES(DEFAULT,'001','管理员',1,1,NULL,NULL);
 
-DROP TABLE IF EXISTS service;
-CREATE TABLE service
+DROP TABLE IF EXISTS Servicees;
+CREATE TABLE Servicees
 (
 	s_id INT PRIMARY KEY AUTO_INCREMENT COMMENT '服务ID',
 	s_name VARCHAR(30) NOT NULL COMMENT '服务名称',
 	s_type INT NOT NULL COMMENT '服务类型',
+	s_status INT NOT NULL COMMENT '服务状态',
 	s_lastTime DATETIME DEFAULT NOW() COMMENT '最后操作时间',
 	s_operator INT NOT NULL COMMENT '操作员',
 	s_processor INT NOT NULL COMMENT '待处理人'
 );
+
+INSERT INTO Servicees VALUE(DEFAULT,'四川客户离心器售后服务',2,4,DEFAULT,1,1);
+INSERT INTO Servicees VALUE(DEFAULT,'山东客户离心器安装服务',2,1,DEFAULT,1,1);
+INSERT INTO Servicees VALUE(DEFAULT,'云南客户设备故障投诉服务',1,2,DEFAULT,1,1);
+INSERT INTO Servicees VALUE(DEFAULT,'北京客户明洞设备安装服务',3,3,DEFAULT,1,1);
+INSERT INTO Servicees VALUE(DEFAULT,'山东客户离心器安装服务',5,1,DEFAULT,1,1);
+INSERT INTO Servicees VALUE(DEFAULT,'四川客户离心器售后服务',3,2,DEFAULT,1,1);
+INSERT INTO Servicees VALUE(DEFAULT,'山东客户离心器安装服务',2,3,DEFAULT,1,1);
+INSERT INTO Servicees VALUE(DEFAULT,'北京客户明洞设备安装服务',4,3,DEFAULT,1,1);
+INSERT INTO Servicees VALUE(DEFAULT,'四川客户离心器售后服务',5,1,DEFAULT,1,1);
+INSERT INTO Servicees VALUE(DEFAULT,'四川客户离心器售后服务',1,2,DEFAULT,1,1);
+INSERT INTO Servicees VALUE(DEFAULT,'北京客户明洞设备安装服务',3,4,DEFAULT,1,1);
+INSERT INTO Servicees VALUE(DEFAULT,'四川客户离心器售后服务',2,4,DEFAULT,1,1);
 
 DROP TABLE IF EXISTS service_FAQ;
 CREATE TABLE service_FAQ
@@ -110,8 +138,28 @@ CREATE TABLE customer
 	c_id INT PRIMARY KEY AUTO_INCREMENT COMMENT '客户ID',
 	c_name VARCHAR(30) NOT NULL COMMENT '客户姓名',
 	c_sex INT NOT NULL COMMENT '客户性别',
-	c_status INT NOT NULL COMMENT '订单状态',
-	c_count INT NOT NULL DEFAULT 0 COMMENT '消费次数',
-	c_amtall DECIMAL(7,2) DEFAULT 0 COMMENT '消费总额',
+	c_type INT NOT NULL COMMENT '客户类型',
+	c_status INT NOT NULL COMMENT '客户状态',
+	c_allot INT NOT NULL COMMENT '分配状态',
+	c_entertime DATETIME DEFAULT NOW() COMMENT '录入时间',
+	c_enteremp DECIMAL(7,2) DEFAULT 0 COMMENT '录入人',
 	c_service INT NOT NULL COMMENT '服务外键'
+);
+
+INSERT INTO customer VALUE(DEFAULT,'廖昌勇',1,4,3,1,DEFAULT,1,1);
+INSERT INTO customer VALUE(DEFAULT,'王翔宇',1,4,2,2,DEFAULT,1,1);
+INSERT INTO customer VALUE(DEFAULT,'Harry·Shaw',1,1,1,1,DEFAULT,1,1);
+INSERT INTO customer VALUE(DEFAULT,'曾未来',1,2,3,1,DEFAULT,1,1);
+INSERT INTO customer VALUE(DEFAULT,'青松',0,3,2,2,DEFAULT,1,1);
+
+DROP TABLE IF EXISTS orders;
+CREATE TABLE orders
+(
+	o_id INT PRIMARY KEY AUTO_INCREMENT COMMENT '订单ID',
+	o_type INT NOT NULL COMMENT '订单类型',
+	o_commodity VARCHAR(100) NOT NULL COMMENT '订单商品',
+	o_customer INT NOT NULL COMMENT '收货人',
+	o_price DECIMAL(10,2) NOT NULL COMMENT '订单金额',
+	o_time DATETIME DEFAULT NOW() COMMENT '下单时间',
+	o_status INT NOT NULL COMMENT '订单状态'
 );

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace mapper接口 必填 随便填值 防止SQL语句ID重名-->
+<mapper namespace="com.manager.mapper.ServiceesMapper">
+    <select id="getServiceesList" resultType="Servicees">
+        SELECT s.*,type.`dd_valueName` `s_Type.dd_ValueName`,status.`dd_valueName` `s_status.dd_ValueName`,op.`e_realName` `s_operator.e_RealName`,pro.`e_realName` `s_processor.e_RealName`
+        FROM servicees s
+        INNER JOIN data_dictionary TYPE ON type.`dd_valueId`=s.`s_type`
+        INNER JOIN data_dictionary STATUS ON status.`dd_valueId`=s.`s_status`
+        INNER JOIN employees op ON op.`e_id`=s.`s_operator`
+        INNER JOIN employees pro ON pro.`e_id`=s.`s_processor`
+        WHERE type.`dd_typeCode`='service_type' AND status.`dd_typeCode`='service_status'
+    </select>
+</mapper>
