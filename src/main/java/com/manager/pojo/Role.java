@@ -1,5 +1,5 @@
 package com.manager.pojo;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
@@ -8,8 +8,9 @@ public class Role {
     private Integer r_Id;
     private String r_Code;
     private String r_Name;
-    private Integer r_DeptNo;
-    private Integer r_ModifyId;
+    private Dept r_DeptNo;
+    private Employees r_ModifyId;
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date r_ModifyTime;
     private String r_Description;
 
@@ -37,19 +38,19 @@ public class Role {
         this.r_Name = r_Name;
     }
 
-    public Integer getR_DeptNo() {
+    public Dept getR_DeptNo() {
         return r_DeptNo;
     }
 
-    public void setR_DeptNo(Integer r_DeptNo) {
+    public void setR_DeptNo(Dept r_DeptNo) {
         this.r_DeptNo = r_DeptNo;
     }
 
-    public Integer getR_ModifyId() {
+    public Employees getR_ModifyId() {
         return r_ModifyId;
     }
 
-    public void setR_ModifyId(Integer r_ModifyId) {
+    public void setR_ModifyId(Employees r_ModifyId) {
         this.r_ModifyId = r_ModifyId;
     }
 

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manager.mapper.RoleMapper">
+    <resultMap id="roleMap" type="Role">
+        <id column="r_id" property="r_Id"/>
+        <association property="r_DeptNo" javaType="Dept">
+            <id column="d_id" property="d_Id"/>
+        </association>
+        <association property="r_ModifyId" javaType="Employees">
+            <id column="e_id" property="e_Id"/>
+        </association>
+    </resultMap>
+
+    <select id="roleList" resultMap="roleMap">
+        SELECT r.*,e.*,d.* FROM role r,employees e,dept d WHERE r.r_modifyId = e.e_id AND r.r_deptNo = d.d_id
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from role r,employees e,dept d WHERE r.r_modifyId = e.e_id AND r.r_deptNo = d.d_id
+    </select>
+</mapper>
