@@ -29,10 +29,8 @@
 <body class="layui-anim layui-anim-up">
 <div class="x-nav">
       <span class="layui-breadcrumb">
-        <a href="">首页</a>
-        <a href="">服务管理</a>
-        <a>
-          <cite>服务创建</cite></a>
+        <a><cite>服务管理</cite></a>
+        <a><cite>服务创建</cite></a>
       </span>
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
        href="javascript:location.replace(location.href);" title="刷新">
@@ -160,13 +158,17 @@
                         var btn = "<div class=\"layui-btn-group\">\n" +
                             "    <a class=\"layui-btn layui-btn-sm\" title='查看' onclick=\"x_admin_show(null,'/getSer/" + data + "/get',600,400)\">\n" +
                             "        <i class=\"layui-icon\">&#xe62a;</i>\n" +
-                            "    </a>\n" +
-                            "    <a class=\"layui-btn layui-btn-sm\" title='修改' onclick=\"x_admin_show(null,'/getSer/" + data + "/modify',600,620,true)\">\n" +
-                            "        <i class=\"layui-icon\">&#xe642;</i>\n" +
-                            "    </a>\n" +
-                            "    <a class=\"layui-btn layui-btn-sm\" title='删除' onclick=\"delSer(" + data + ",'" + full.s_Name + "')\">\n" +
-                            "        <i class=\"layui-icon\">&#xe640;</i>\n" +
                             "    </a>\n";
+                        if ("新创建" == full.s_Status.dd_ValueName) {
+                            btn = btn + "    <a class=\"layui-btn layui-btn-sm\" title='修改' onclick=\"x_admin_show(null,'/getSer/" + data + "/modify',600,620,true)\">\n" +
+                                "        <i class=\"layui-icon\">&#xe642;</i>\n" +
+                                "    </a>\n";
+                        }
+                        if ("已提交" == full.s_Status.dd_ValueName) {
+                            btn = btn + "    <a class=\"layui-btn layui-btn-sm\" title='删除' onclick=\"delSer(" + data + ",'" + full.s_Name + "')\">\n" +
+                                "        <i class=\"layui-icon\">&#xe640;</i>\n" +
+                                "    </a>\n";
+                        }
                         if ("新创建" == full.s_Status.dd_ValueName) {
                             btn = btn + "    <a class=\"layui-btn layui-btn-sm\" title='提交' onclick=\"subSer(" + data + ",'" + full.s_Name + "')\">\n" +
                                 "        <i class=\"layui-icon\">&#xe681;</i>\n" +

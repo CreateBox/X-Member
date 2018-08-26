@@ -22,9 +22,8 @@
 <body class="layui-anim layui-anim-up">
 <div class="x-nav">
       <span class="layui-breadcrumb">
-        <a>
-          <cite>系统管理>></cite>
-            <cite>角色管理</cite></a>
+        <a><cite>系统管理</cite></a>
+        <a><cite>角色管理</cite></a>
       </span>
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
        href="javascript:location.replace(location.href);" title="刷新">
@@ -34,8 +33,10 @@
     <div class="layui-row">
         <div class="layui-row layui-col-md12 x-so layui-col-md-offset1">
             角色名称：<input type="text" id="r_name" placeholder="请输入角色名" autocomplete="off" class="layui-input">
-            <button class="layui-btn" id="roleQuery" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
-            <button class="layui-btn" id="roleAdd" onclick="x_admin_show(null,'/jump/sysroleadd',600,550)"><i class="layui-icon">&#xe654;</i></button>
+            <button class="layui-btn" id="roleQuery" lay-submit="" lay-filter="sreach"><i
+                    class="layui-icon">&#xe615;</i></button>
+            <button class="layui-btn" id="roleAdd" onclick="x_admin_show(null,'/jump/sysroleadd',600,470)"><i
+                    class="layui-icon">&#xe654;</i></button>
         </div>
     </div>
 
@@ -60,18 +61,18 @@
 <script src="/static/js/sysrole.js"></script>
 <script>
 
-    function delRole(id,name) {
-        layer.confirm("确认删除角色:"+name, {icon: 3, title:'提示'},function () {
+    function delRole(id, name) {
+        layer.confirm("确认删除角色:" + name, {icon: 3, title: '提示'}, function () {
             $.ajax({
-                type:"POST",
-                url:"/delRole",
-                data:{r_Id:id},
-                dataType:"JSON",
-                success:function (data) {
-                    if(data == true){
+                type: "POST",
+                url: "/delRole",
+                data: {r_Id: id},
+                dataType: "JSON",
+                success: function (data) {
+                    if (data == true) {
                         layer.msg("删除成功!");
                         $("#roleInfo").DataTable().ajax.reload();
-                    }else {
+                    } else {
                         layer.msg("删除失败!");
                     }
                 }
