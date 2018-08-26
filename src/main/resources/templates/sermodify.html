@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎页面-X-admin2.0</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="/static/css/font.css">
+    <link rel="stylesheet" href="/static/css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="/static/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/js/xadmin.js"></script>
+    <style>
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+<body>
+<div class="x-body layui-anim layui-anim-up">
+    <fieldset class="layui-elem-field">
+        <legend>服务修改</legend>
+        <div class="layui-field-box">
+            <form class="layui-form" onsubmit="return modifyRole()" id="formSer">
+                <input th:value="${info.getS_Id()}" th:name="s_Id" hidden/>
+                <table class="layui-table">
+                    <tbody>
+                    <tr>
+                        <td>服务名称</td>
+                        <td th:text="${info.getS_Name()}"></td>
+                    </tr>
+                    <tr>
+                        <td>服务状态</td>
+                        <td th:text="${info.getS_Status().getDd_ValueName()}"></td>
+                    </tr>
+                    <tr>
+                        <td>服务类型</td>
+                        <td><select name="s_Type.dd_ValueId" class="layui-select" style="width: 200px;height: 30px">
+                            <option th:selected="${info.getS_Type().getDd_ValueId() == type.getDd_ValueId()}"
+                                    th:each="type:${service_type}"
+                                    th:value="${type.getDd_ValueId()}" th:text="${type.getDd_ValueName()}"></option>
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td>联系电话</td>
+                        <td><input name="s_iPhone" class="layui-input" type="number" id="phone"
+                                   th:value="${info.getS_iPhone()}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>服务内容</td>
+                        <td><textarea name="s_info" class="layui-textarea" th:text="${info.getS_info()}"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>备注信息</td>
+                        <td><textarea name="s_description" class="layui-textarea"
+                                      th:text="${info.getS_description()}"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align: center">
+                            <input type="submit" value="提交" class="layui-btn layui-bg-blue"/>
+                            <input type="button" value="返回" class="layui-btn layui-bg-blue" onclick="back()"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </fieldset>
+</div>
+<!-- jQuery -->
+<script src="/static/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/servicees.js"></script>
+</body>
+</html>

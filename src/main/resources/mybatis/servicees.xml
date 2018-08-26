@@ -5,12 +5,56 @@
 <!--namespace mapper接口 必填 随便填值 防止SQL语句ID重名-->
 <mapper namespace="com.manager.mapper.ServiceesMapper">
     <select id="getServiceesList" resultType="Servicees">
-        SELECT s.*,type.`dd_valueName` `s_Type.dd_ValueName`,status.`dd_valueName` `s_status.dd_ValueName`,op.`e_realName` `s_operator.e_RealName`,pro.`e_realName` `s_processor.e_RealName`
+        SELECT s.*,type.`dd_valueId` `s_Type.dd_ValueId`,type.`dd_valueName` `s_Type.dd_ValueName`,status.`dd_valueId`
+        `s_status.dd_ValueId`,status.`dd_valueName` `s_status.dd_ValueName`,op.`e_realName`
+        `s_operator.e_RealName`,pro.`e_realName` `s_processor.e_RealName`
         FROM servicees s
         INNER JOIN data_dictionary TYPE ON type.`dd_valueId`=s.`s_type`
         INNER JOIN data_dictionary STATUS ON status.`dd_valueId`=s.`s_status`
         INNER JOIN employees op ON op.`e_id`=s.`s_operator`
         INNER JOIN employees pro ON pro.`e_id`=s.`s_processor`
         WHERE type.`dd_typeCode`='service_type' AND status.`dd_typeCode`='service_status'
+        AND s.`s_name` LIKE CONCAT('%',#{ser.s_Name},'%')
+        <if test="null != ser.s_Type.dd_ValueId">
+            AND s.`s_type` = #{ser.s_Type.dd_ValueId}
+        </if>
+        <if test="null != ser.s_Status.dd_ValueId">
+            AND s.`s_status` = #{ser.s_Status.dd_ValueId}
+        </if>
+        ORDER BY s.`s_id`
+        LIMIT #{start},#{length}
+    </select>
+    <select id="getServiceesCount" resultType="_int">
+        SELECT COUNT(*) FROM servicees s
+        <where>
+            AND s.`s_name` LIKE CONCAT('%',#{ser.s_Name},'%')
+            <if test="null != ser.s_Type.dd_ValueId">
+                AND s.`s_type` = #{ser.s_Type.dd_ValueId}
+            </if>
+            <if test="null != ser.s_Status.dd_ValueId">
+                AND s.`s_status` = #{ser.s_Status.dd_ValueId}
+            </if>
+        </where>
+    </select>
+    <delete id="delSer">
+        DELETE FROM servicees WHERE s_Id=#{id}
+    </delete>
+    <update id="updateSerSub">
+        UPDATE servicees SET s_status = 2 , s_lastTime = default WHERE s_id = #{id}
+    </update>
+    <update id="updateSer">
+        UPDATE servicees s
+        SET s.`s_info`=#{s_info},s.`s_description`=#{s_description},s.`s_iPhone`=#{s_iPhone},s.`s_type` = #{s_Type.dd_ValueId} , s_lastTime = DEFAULT
+        WHERE s_id = #{s_Id}
+    </update>
+    <select id="getSerById" resultType="Servicees">
+        SELECT s.*,type.`dd_valueId` `s_Type.dd_ValueId`,type.`dd_valueName` `s_Type.dd_ValueName`,status.`dd_valueId` `s_status.dd_ValueId`,status.`dd_valueName` `s_status.dd_ValueName`,op.`e_realName` `s_operator.e_RealName`,pro.`e_realName` `s_processor.e_RealName`
+        FROM servicees s
+        INNER JOIN data_dictionary `type` ON type.`dd_valueId`=s.`s_type`
+        INNER JOIN data_dictionary `status` ON status.`dd_valueId`=s.`s_status`
+        INNER JOIN employees op ON op.`e_id`=s.`s_operator`
+        INNER JOIN employees pro ON pro.`e_id`=s.`s_processor`
+        WHERE type.`dd_typeCode`='service_type' AND status.`dd_typeCode`='service_status'
+        AND s.s_id=#{id}
     </select>
 </mapper>

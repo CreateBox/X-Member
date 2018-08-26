@@ -15,6 +15,33 @@ public class Servicees {
     private Date s_LastTime;
     private Employees s_Operator;
     private Employees s_Processor;
+    private String s_iPhone;
+    private String s_info;
+    private String s_description;
+
+    public String getS_iPhone() {
+        return s_iPhone;
+    }
+
+    public void setS_iPhone(String s_iPhone) {
+        this.s_iPhone = s_iPhone;
+    }
+
+    public String getS_info() {
+        return s_info;
+    }
+
+    public void setS_info(String s_info) {
+        this.s_info = s_info;
+    }
+
+    public String getS_description() {
+        return s_description;
+    }
+
+    public void setS_description(String s_description) {
+        this.s_description = s_description;
+    }
 
     public Integer getS_Id() {
         return s_Id;
