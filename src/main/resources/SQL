@@ -110,7 +110,7 @@ CREATE TABLE Servicees
 	s_status INT NOT NULL COMMENT '服务状态',
 	s_lastTime DATETIME DEFAULT NOW() COMMENT '最后操作时间',
 	s_operator INT NOT NULL COMMENT '操作员',
-	s_processor INT NOT NULL COMMENT '待处理人',
+	s_processor INT DEFAULT NULL COMMENT '待处理人',
 	s_info VARCHAR(255) COMMENT '服务内容',
 	s_description VARCHAR(255) COMMENT '备注信息'
 
@@ -133,12 +133,28 @@ DROP TABLE IF EXISTS service_FAQ;
 CREATE TABLE service_FAQ
 (
 	sf_id INT PRIMARY KEY AUTO_INCREMENT COMMENT '服务常见问题ID',
-	sf_title VARCHAR(30) NOT NULL COMMENT '标题',
+	sf_title VARCHAR(100) NOT NULL COMMENT '标题',
 	sf_type INT NOT NULL COMMENT '服务类型',
 	sf_create INT NOT NULL COMMENT '创建人',
-	sf_lastTime DATETIME DEFAULT NOW() COMMENT '最后操作时间'
+	sf_lastTime DATETIME DEFAULT NOW() COMMENT '最后操作时间',
+	sf_point VARCHAR(255) COMMENT '答复要点',
+	sf_description VARCHAR(255) COMMENT '备注信息'
 );
 
+INSERT INTO service_FAQ VALUE(DEFAULT,'离心器初速过慢什么问题',1,1,DEFAULT,'答复要点','备注信息');
+INSERT INTO service_FAQ VALUE(DEFAULT,'安装离心器需要哪些条件',2,1,DEFAULT,NULL,NULL);
+INSERT INTO service_FAQ VALUE(DEFAULT,'ERS-2型冲击器总是需要二次启动',3,1,DEFAULT,NULL,NULL);
+INSERT INTO service_FAQ VALUE(DEFAULT,'明洞设备安装后多久可以投入生产',4,1,DEFAULT,NULL,NULL);
+INSERT INTO service_FAQ VALUE(DEFAULT,'ERS-2型冲击器售价多少',3,1,DEFAULT,NULL,NULL);
+INSERT INTO service_FAQ VALUE(DEFAULT,'1',1,1,DEFAULT,NULL,NULL);
+INSERT INTO service_FAQ VALUE(DEFAULT,'2',2,1,DEFAULT,NULL,NULL);
+INSERT INTO service_FAQ VALUE(DEFAULT,'3',4,1,DEFAULT,NULL,NULL);
+INSERT INTO service_FAQ VALUE(DEFAULT,'1',2,1,DEFAULT,'答复要点','备注信息');
+INSERT INTO service_FAQ VALUE(DEFAULT,'123',1,1,DEFAULT,'答复要点','备注信息');
+INSERT INTO service_FAQ VALUE(DEFAULT,'1',3,1,DEFAULT,'答复要点','备注信息');
+INSERT INTO service_FAQ VALUE(DEFAULT,'2',1,1,DEFAULT,'答复要点','备注信息');
+INSERT INTO service_FAQ VALUE(DEFAULT,'2',2,1,DEFAULT,'答复要点','备注信息');
+INSERT INTO service_FAQ VALUE(DEFAULT,'2',1,1,DEFAULT,'答复要点','备注信息');
 
 DROP TABLE IF EXISTS customer;
 CREATE TABLE customer

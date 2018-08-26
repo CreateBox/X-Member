@@ -1,10 +1,12 @@
 package com.manager.control.servicees;
 
 import com.manager.pojo.DataDictionary;
+import com.manager.pojo.Employees;
 import com.manager.pojo.Servicees;
 import com.manager.service.datadictionary.DataDictionaryService;
 import com.manager.service.servicees.ServiceesService;
 import com.manager.util.PageUtil;
+import com.manager.util.SessionUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -37,8 +40,11 @@ public class ServiceesControl {
     public Object serviceesList(@RequestParam(name = "draw", required = false, defaultValue = "0") int draw,
                                 @RequestParam(name = "start", required = false, defaultValue = "0") int start,
                                 @RequestParam(name = "length", required = false, defaultValue = "0") int length,
-                                Servicees servicees) {
+                                Servicees servicees, HttpSession session) {
         PageUtil<Servicees> pageUtil = new PageUtil<>();
+        Employees employees = SessionUtil.get(session);
+        servicees.setS_Operator(employees);
+        servicees.setS_Processor(employees);
         int count = serviceesService.getServiceesCount(servicees);
         List<Servicees> serviceesList = serviceesService.getServiceesList(servicees, start, length);
         pageUtil.setData(serviceesList);
