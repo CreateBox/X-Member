@@ -12,6 +12,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
         HttpSession session = request.getSession();
 
+        //开发模式
+//        return true;
+
         //判断是否已有该用户登录的session
         if (session.getAttribute("loginEmployee") != null) {
             return true;
