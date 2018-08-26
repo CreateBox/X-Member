@@ -14,10 +14,59 @@
     </resultMap>
 
     <select id="roleList" resultMap="roleMap">
-        SELECT r.*,e.*,d.* FROM role r,employees e,dept d WHERE r.r_modifyId = e.e_id AND r.r_deptNo = d.d_id
+        SELECT r.*,e.*,d.* FROM role r,employees e,dept d
+        <trim prefix="where" prefixOverrides="and">
+            r.r_modifyId = e.e_id AND r.r_deptNo = d.d_id
+            <if test="role.r_Name != null and role.r_Name != ''">
+                and r_Name like concat('%',#{role.r_Name},'%')
+            </if>
+            limit #{begin},#{end}
+        </trim>
     </select>
 
     <select id="count" resultType="int">
-        select count(*) from role r,employees e,dept d WHERE r.r_modifyId = e.e_id AND r.r_deptNo = d.d_id
+        select count(*) from role r,employees e,dept d
+        <trim prefix="where" prefixOverrides="and">
+            r.r_modifyId = e.e_id AND r.r_deptNo = d.d_id
+            <if test="r_Name != null and r_Name != ''">
+                and r_Name like concat('%',#{r_Name},'%')
+            </if>
+        </trim>
     </select>
+
+    <select id="getRole" resultMap="roleMap">
+        SELECT r.*,e.*,d.* FROM role r,employees e,dept d
+        <trim prefix="where" prefixOverrides="and">
+            r.r_modifyId = e.e_id AND r.r_deptNo = d.d_id
+            <if test="r_Id != null and r_Id != ''">
+                and r_id = #{r_Id}
+            </if>
+        </trim>
+    </select>
+
+    <select id="roleAll" resultType="Role">
+        select * from role
+    </select>
+
+    <update id="modify">
+        update role
+        <trim prefix="set" suffixOverrides="," suffix="where r_code = #{r_Code}">
+            <if test="r_DeptNo.d_Id != null and r_DeptNo.d_Id != 0">
+                r_deptNo = #{r_DeptNo.d_Id},
+            </if>
+            <if test="r_ModifyId != null">
+                r_ModifyId = #{r_ModifyId},
+            </if>
+            <if test="r_ModifyTime != null">
+                r_ModifyTime = #{r_ModifyTime},
+            </if>
+            <if test="r_Description != null">
+                r_Description = #{r_Description},
+            </if>
+        </trim>
+    </update>
+
+    <delete id="delRole">
+        delete from role where r_id = #{r_Id}
+    </delete>
 </mapper>

@@ -50,8 +50,8 @@
                 <tr>
                     <th>联系电话</th>
                     <td>
-                        <input name="e_Phone" class="layui-input layui-input-inline" id="phone" style="width: 200px" readonly type="text" th:attr="value=${session.loginEmployee.e_Phone}"/>
-                        <input type="button" value="修改" class="layui-btn" onclick="abc(this)"/>
+                        <input name="e_Phone" class="layui-input layui-input-inline" id="phone" style="width: 200px" disabled type="text" th:attr="value=${session.loginEmployee.e_Phone}"/>
+                        <input type="button" value="修改" class="layui-btn" onclick="modify(this)"/>
                     </td>
                 </tr>
                 </tbody>
@@ -66,9 +66,9 @@
     var empId = [[${session.loginEmployee.e_Id}]];
     /*]]>*/
 
-    function abc(modify) {
-        if($("#phone").attr("readonly")=="readonly"){
-            $("#phone").removeAttr("readonly");
+    function modify(modify) {
+        if($("#phone").attr("disabled")=="disabled"){
+            $("#phone").removeAttr("disabled");
             modify.value="保存";
         }else{
             $.ajax({
@@ -86,7 +86,7 @@
                     };
                 }
             })
-            $("#phone").attr("readonly","readonly");
+            $("#phone").attr("disabled","disabled");
             modify.value="修改";
         }
     }

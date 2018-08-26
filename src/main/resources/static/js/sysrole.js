@@ -4,9 +4,8 @@ $(document).ready(function () {
 
 function x() {
     $('#roleInfo').dataTable({
-        "searching":false,
+        "searching": false,
         "serverSide": true,//是否启用服务器处理数据源
-        "bStateSave": false,//不缓存数据
         "language": {
             "lengthMenu": "每页 _MENU_ 条记录",
             "zeroRecords": "没有找到记录",
@@ -25,32 +24,46 @@ function x() {
             {"title": "最后修改时间", "targets": 2},
             {"title": "操作人", "targets": 3},
             {"title": "备注说明", "targets": 4},
+            {"title": "操作", "targets": 5}
         ],
         "ajax": {
             "url": "/roleList",
             "type": "POST",
-            // "data": function (datas) {
-            //     datas.appInfo = JSON.stringify({
-            //         "softwareName": $("#softwareName").val(),
-            //         "status": $("#status").val(),
-            //         "flatformId": $("#flatformId").val(),
-            //         "categoryLevel1": $("#categoryLevel1").val(),
-            //         "categoryLevel2": $("#categoryLevel2").val(),
-            //         "categoryLevel3": $("#categoryLevel3").val()
-            //     });
-            // },
+            "data": function (d) {
+                d.r_Name = $("#r_name").val();
+            },
             "dataType": "json"
         },
         "columns": [
             {"data": "r_Name"},
             {"data": "r_DeptNo.d_Name"},
-            {"data": "r_ModifyTime",defaultContent:""},
+            {"data": "r_ModifyTime", defaultContent: ""},
             {"data": "r_ModifyId.e_RealName"},
-            {"data": "r_Description", defaultContent: ""}
+            {"data": "r_Description", defaultContent: ""},
+            {
+                "data": "r_Id","width":"150px", "render": function (data, type, full, meta) {
+                    return "<div class=\"layui-btn-group\">\n" +
+                        "    <a class=\"layui-btn layui-btn-sm\" onclick=\"x_admin_show(null,'/getRole/"+data+"/get',600,300)\">\n" +
+                        "        <i class=\"layui-icon\">&#xe62a;</i>\n" +
+                        "    </a>\n" +
+                        "    <a class=\"layui-btn layui-btn-sm\" onclick=\"x_admin_show(null,'/getRole/"+data+"/modify',600,450,true)\">\n" +
+                        "        <i class=\"layui-icon\">&#xe642;</i>\n" +
+                        "    </a>\n" +
+                        "    <a class=\"layui-btn layui-btn-sm\" onclick=\"delRole("+data+",'"+full.r_Name+"')\">\n" +
+                        "        <i class=\"layui-icon\">&#xe640;</i>\n" +
+                        "    </a>\n" +
+                        "</div>";
+                }
+            }
         ]
     });
-
     $(".btn-success").on("click", function () {
-        $('#appinfo').DataTable().ajax.reload();
+        $("#roleInfo").DataTable().ajax.reload();
+    });
+
+    $("#roleQuery").on("click", function () {
+        $("#roleInfo").DataTable().ajax.reload();
     });
 }
+
+

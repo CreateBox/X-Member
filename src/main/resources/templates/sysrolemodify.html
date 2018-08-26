@@ -15,33 +15,40 @@
 <body>
 <div class="x-body layui-anim layui-anim-up">
     <fieldset class="layui-elem-field">
-        <legend>修改密码</legend>
+        <legend>角色修改</legend>
         <div class="layui-field-box">
-            <form class="layui-form" onsubmit="return modifyPwd()" id="form1">
+            <form class="layui-form" onsubmit="return modifyRole()" id="form1">
+                <input th:value="${newRole.r_Code}" th:name="r_Code" hidden/>
                 <table class="layui-table">
                     <tbody>
                     <tr>
-                        <th>登录ID</th>
+                        <th>角色编码</th>
+                        <td th:text="${newRole.r_Code}"></td>
+                    </tr>
+                    <tr>
+                        <th>角色名称</th>
+                        <td th:text="${newRole.r_Name}"></td>
+                    </tr>
+                    <tr>
+                        <td>所属部门</td>
                         <td>
-                            <input name="loginName" class="layui-input" readonly  type="text" th:attr="value=${session.loginEmployee.e_LoginName}"/>
+                            <select name="r_DeptNo.d_Id" class="layui-select" style="width: 200px;height: 30px">
+                                <option value="0">--请选择--</option>
+                                <option th:selected="${newRole.r_DeptNo.d_Id eq dept.d_Id}" th:each="dept:${depts}"
+                                        th:value="${dept.d_Id}" th:text="${dept.d_Name}"></option>
+                            </select>
                         </td>
                     </tr>
                     <tr>
-                        <th>原始密码</th>
-                        <td><input name="oldPwd" required type="text" class="layui-input"/></td>
-                    </tr>
-                    <tr>
-                        <th>新密码</th>
-                        <td><input name="newPwd" required type="text" class="layui-input"/></td>
-                    </tr>
-                    <tr>
-                        <th>确认密码</th>
-                        <td><input name="confirmNewPwd" required type="text" class="layui-input"/></td>
+                        <td>备注信息</td>
+                        <td>
+                            <textarea name="r_Description" class="layui-textarea" th:text="${newRole.r_Description}"></textarea>
+                        </td>
                     </tr>
                     <tr>
                         <td colspan="2" style="text-align: center">
-                            <input type="submit" value="提交" class="layui-btn"/>
-                            <input type="button" value="返回" class="layui-btn" id="back" onclick="backs()"/>
+                            <input type="submit" value="提交" class="layui-btn layui-bg-blue"/>
+                            <input type="button" value="返回" class="layui-btn layui-bg-blue" onclick="back()"/>
                         </td>
                     </tr>
                     </tbody>
@@ -52,38 +59,31 @@
 </div>
 <!-- jQuery -->
 <script src="/static/lib/jquery/dist/jquery.min.js"></script>
-<script>
-    function backs() {
+<script th:inline="javascript">
+
+    function back() {
         parent.layer.closeAll();
     }
 
-    function modifyPwd() {
+    function modifyRole() {
         $.ajax({
             //几个参数需要注意一下
             type: "POST",//提交类型
             dataType: "json",//预期服务器返回的数据类型
-            url: "/modifyPwd" ,//url
+            url: "/modifyRole" ,//url
             data: $("#form1").serialize(),//序列化表单信息
             success: function (data) {
                 console.log(data);//打印服务端返回的数据(调试用)
                 if (data == true) {
-                    $("#back").attr("disabled","disabled");
-                    layer.msg("修改成功，3秒后退出！");
-                    setTimeout(function (){
-                        parent.layer.close(layer.index);
-                        parent.location.href="/";
-                    }, 3000);
-                }else if(data == false){
-                    layer.msg("修改失败!");
-                }else if(data == "Don't match"){
-                    layer.msg("两次密码不一致!");
+                    layer.msg("修改成功!");
                 }else{
-                    layer.msg("旧密码不正确!");
-                };
+                    layer.msg("修改失败!");
+                }
             }
         });
         return false;
     }
+
     var _hmt = _hmt || [];
     (function () {
         var hm = document.createElement("script");

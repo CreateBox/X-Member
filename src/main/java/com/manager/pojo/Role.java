@@ -14,6 +14,14 @@ public class Role {
     private Date r_ModifyTime;
     private String r_Description;
 
+    public Role(){
+
+    }
+
+    public Role(Integer id){
+        this.r_Id = id;
+    }
+
     public Integer getR_Id() {
         return r_Id;
     }
