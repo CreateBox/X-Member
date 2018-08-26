@@ -17,4 +17,8 @@ public interface RoleMapper {
     int modify(Role role);
 
     int delRole(Role role);
+
+    int addRole(Role role);
+
+    int validationRole(Role role);
 }

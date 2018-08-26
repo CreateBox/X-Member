@@ -81,7 +81,8 @@ CREATE TABLE dept
 	d_name VARCHAR(20) NOT NULL COMMENT '部门名称'
 );
 
-INSERT INTO dept VALUES(DEFAULT,'001','综合部');
+INSERT INTO dept VALUES(DEFAULT,'001','综合部'),(DEFAULT,'002','总经办'),(DEFAULT,'003','市场发展部'),(DEFAULT,'004','业务一部'),(DEFAULT,'005','业务二部'),
+                                            			(DEFAULT,'006','财务部');
 
 DROP TABLE IF EXISTS role;
 CREATE TABLE role
@@ -95,7 +96,9 @@ CREATE TABLE role
 	r_description VARCHAR(255) COMMENT '备注信息'
 );
 
-INSERT INTO role VALUES(DEFAULT,'001','管理员',1,1,NULL,NULL);
+INSERT INTO role VALUES(DEFAULT,'001','管理员',1,1,NULL,NULL),(DEFAULT,'002','销售总监',3,1,NOW(),'默认角色，误删'),
+                                                          			(DEFAULT,'003','销售经理',3,1,NOW(),'默认角色，误删'),(DEFAULT,'004','销售代表',3,1,NOW(),'默认角色，误删'),
+                                                          			(DEFAULT,'005','财务',6,1,NOW(),NULL);
 
 DROP TABLE IF EXISTS Servicees;
 CREATE TABLE Servicees

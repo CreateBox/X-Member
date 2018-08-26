@@ -55,7 +55,7 @@
                 r_deptNo = #{r_DeptNo.d_Id},
             </if>
             <if test="r_ModifyId != null">
-                r_ModifyId = #{r_ModifyId},
+                r_ModifyId = #{r_ModifyId.e_Id},
             </if>
             <if test="r_ModifyTime != null">
                 r_ModifyTime = #{r_ModifyTime},
@@ -69,4 +69,20 @@
     <delete id="delRole">
         delete from role where r_id = #{r_Id}
     </delete>
+
+    <insert id="addRole">
+        insert into role values(default,#{r_Code},#{r_Name},#{r_DeptNo.d_Id},#{r_ModifyId.e_Id},#{r_ModifyTime},#{r_Description})
+    </insert>
+
+    <select id="validationRole" resultType="int">
+        select count(*) from role
+        <trim prefix="where" prefixOverrides="and">
+            <if test="r_Code != null and r_Code != ''">
+                and r_Code = #{r_Code}
+            </if>
+            <if test="r_Name != null and r_Name != ''">
+                and r_Name = #{r_Name}
+            </if>
+        </trim>
+    </select>
 </mapper>

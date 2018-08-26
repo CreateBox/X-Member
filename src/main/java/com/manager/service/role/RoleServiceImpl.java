@@ -50,4 +50,14 @@ public class RoleServiceImpl implements RoleService {
     public int delRole(Role role) {
         return roleMapper.delRole(role);
     }
+
+    @Override
+    public int addRole(Role role) {
+        return roleMapper.addRole(role);
+    }
+
+    @Override
+    public int validationRole(Role role) {
+        return roleMapper.validationRole(role);
+    }
 }
