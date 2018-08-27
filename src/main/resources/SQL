@@ -48,9 +48,6 @@ INSERT INTO data_dictionary VALUE(DEFAULT,'order_type','订单类型',2,'加急�
 INSERT INTO data_dictionary VALUE(DEFAULT,'customer_distribution','分配状态',1,'已分配',1,NOW(),NULL);
 INSERT INTO data_dictionary VALUE(DEFAULT,'customer_distribution','分配状态',2,'未分配',1,NOW(),NULL);
 
-INSERT INTO data_dictionary VALUE(DEFAULT,'emp_status','员工状态',2,'正常',1,NOW(),NULL);
-INSERT INTO data_dictionary VALUE(DEFAULT,'emp_status','员工状态',2,'禁用',1,NOW(),NULL);
-
 DROP TABLE IF EXISTS employees;
 CREATE TABLE employees
 (
@@ -63,7 +60,8 @@ CREATE TABLE employees
 	e_phone VARCHAR(20) COMMENT '联系电话',
 	e_role INT COMMENT '系统角色',
 	e_deptId INT COMMENT '所属部门',
-	e_status INT NOT NULL DEFAULT 1 COMMENT '当前状态',
+	e_superior INT COMMENT '所属上级',
+	e_status VARCHAR(10) NOT NULL COMMENT '当前状态',
 	e_createTime DATETIME NOT NULL COMMENT '创建时间',
 	e_modifyId INT COMMENT '操作人',
 	e_modifyTime DATETIME COMMENT '修改时间',
@@ -71,18 +69,53 @@ CREATE TABLE employees
 	e_description VARCHAR(255) COMMENT '备注信息'
 );
 
-INSERT INTO employees VALUES(DEFAULT,'ZHB007','admin',MD5('123456'),'尚鸿运',1,'13312341234',1,1,1,NOW(),1,NULL,NULL,NULL);
+INSERT INTO employees VALUES(DEFAULT,'ZHB007','admin',MD5('123456'),'尚鸿运',1,'13312341234',1,1,1,'正常',NOW(),1,NULL,NULL,NULL);
+
+DROP TABLE IF EXISTS `status`;
+CREATE TABLE `status`
+(
+	st_id INT PRIMARY KEY AUTO_INCREMENT COMMENT '状态ID',
+	st_name VARCHAR(10) NOT NULL COMMENT '状态名称'
+);
+INSERT INTO `status` VALUES(DEFAULT,'正常'),(DEFAULT,'禁用');
+
+DROP TABLE IF EXISTS sex;
+CREATE TABLE sex
+(
+	sex_id INT PRIMARY KEY AUTO_INCREMENT COMMENT '性别ID',
+	sex_name VARCHAR(10) NOT NULL COMMENT '性别名称'
+);
+
+INSERT INTO sex VALUES(DEFAULT,'男'),(DEFAULT,'女');
 
 DROP TABLE IF EXISTS dept;
 CREATE TABLE dept
 (
 	d_id INT PRIMARY KEY AUTO_INCREMENT COMMENT '部门ID',
-	d_code VARCHAR(20) NOT NULL COMMENT '部门编号',
-	d_name VARCHAR(20) NOT NULL COMMENT '部门名称'
+	d_name VARCHAR(20) NOT NULL COMMENT '部门名称',
+	d_intro VARCHAR(255) COMMENT '部门简介'
 );
 
-INSERT INTO dept VALUES(DEFAULT,'001','综合部'),(DEFAULT,'002','总经办'),(DEFAULT,'003','市场发展部'),(DEFAULT,'004','业务一部'),(DEFAULT,'005','业务二部'),
-                                            			(DEFAULT,'006','财务部');
+INSERT INTO dept VALUES(DEFAULT,'总经办','总经理办公室负责公司重要政策和文件的制定和发布......'),
+(DEFAULT,'综合部','什么事都干的部门'),(DEFAULT,'市场发展部','拓展公司业务发展'),(DEFAULT,'业务一部','公司业务一号部门'),
+(DEFAULT,'业务二部','公司业务二号部门'),(DEFAULT,'财务部','管理公司财务');
+
+DROP TABLE IF EXISTS organization;
+CREATE TABLE organization
+(
+	o_id INT PRIMARY KEY AUTO_INCREMENT COMMENT '组织ID',
+	o_Code VARCHAR(20) NOT NULL COMMENT '组织编码',
+	o_name VARCHAR(20) NOT NULL COMMENT '组织简称',
+	o_fullName VARCHAR(30) NOT NULL COMMENT '组织全称',
+	o_deptNo INT NOT NULL COMMENT '所属部门',
+	o_modifyId INT NOT NULL COMMENT '操作人',
+	o_modifyTime DATETIME NOT NULL COMMENT '修改时间',
+	o_description VARCHAR(255) COMMENT '备注信息'
+);
+
+INSERT INTO organization VALUES(DEFAULT,'SL_ZJB','总经办','总经理办公室',1,1,NOW(),NULL),(DEFAULT,'SL_ZHB','综合部','综合管理部门',2,1,NOW(),NULL),
+(DEFAULT,'SL_SCFZB','市场发展部','业务市场战略发展',3,1,NOW(),NULL),(DEFAULT,'SL_YWYB','业务一部','业务拓展一号部门',4,1,NOW(),NULL),
+(DEFAULT,'SL_YWEB','业务二部','业务拓展二号部门',5,1,NOW(),NULL);
 
 DROP TABLE IF EXISTS role;
 CREATE TABLE role

@@ -13,15 +13,21 @@
         <association property="e_DeptId" javaType="Dept">
             <id column="d_id" property="d_Id"/>
         </association>
-        <association property="e_Sex" javaType="DataDictionary">
-            <id column="dd_id" property="dd_Id"/>
+        <association property="e_Superior" javaType="Employees">
+            <id column="e_id" property="e_Id"/>
+        </association>
+        <association property="e_Sex" javaType="Sex">
+            <id column="sex_id" property="sex_Id"/>
+        </association>
+        <association property="e_Status" javaType="Status">
+            <id column="st_id" property="st_Id"/>
         </association>
     </resultMap>
 
     <select id="getEmployees" resultMap="EmployeesMap">
-        select e.*,d.*,r.*,dd.* from employees e,dept d, role r,data_dictionary dd
+        select e.*,d.*,r.*,dd.*,s.*,st.* from employees e,dept d,data_dictionary dd, role r,sex s,status st
         <trim prefix="where" prefixOverrides="and">
-            e.e_role = r.r_id and e.e_deptid = d.d_id and e.e_modifyId = e.e_id and e.e_sex = dd.dd_valueId and dd.dd_typeCode='sex'
+            e.e_role = r.r_id and e.e_deptid = d.d_id and e.e_modifyId = e.e_id and e.e_sex = s.sex_id and e.e_status = st.st_id
             <if test="e_LoginName != null and e_LoginName != ''">
                and e_loginName = #{e_LoginName}
             </if>

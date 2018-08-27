@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manager.mapper.OrganizationMapper">
+
+    <resultMap id="organizationMap" type="Organization">
+        <id column="o_id" property="o_Id"/>
+        <association property="o_DeptNo" javaType="Dept">
+            <id column="d_id" property="d_Id"/>
+        </association>
+        <association property="o_ModifyId" javaType="Employees">
+            <id column="e_id" property="e_Id"/>
+        </association>
+    </resultMap>
+
+    <select id="organizationList" resultMap="organizationMap">
+        select o.*,d.*,e.* from organization o,dept d,employees e
+        <trim prefix="where" prefixOverrides="and">
+            o.o_DeptNo = d.d_id and o.o_ModifyId = e.e_id
+            <if test="organization.o_Name != null and organization.o_Name != ''">
+               and o_Name like concat('%',#{organization.o_Name},'%')
+            </if>
+            limit #{begin},#{end}
+        </trim>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from organization o,dept d,employees e
+        <trim prefix="where" prefixOverrides="and">
+            o.o_DeptNo = d.d_id and o.o_ModifyId = e.e_id
+            <if test="o_Name != null and o_Name != ''">
+              and o_Name like concat('%',#{o_Name},'%')
+            </if>
+        </trim>
+    </select>
+
+    <select id="getOrganization" resultMap="organizationMap">
+        select o.*,d.*,e.* from organization o,dept d,employees e where o.o_DeptNo = d.d_id and o.o_ModifyId = e.e_id and o_id = #{o_Id}
+    </select>
+
+    <update id="modifyOrganization">
+        update organization
+        <trim prefix="set" suffixOverrides="," suffix="where o_id = #{o_Id}">
+            <if test="o_Code != null and o_Code != ''">
+                o_Code = #{o_Code},
+            </if>
+            <if test="o_Name != null and o_Name != ''">
+                o_Name = #{o_Name},
+            </if>
+            <if test="o_FullName != null and o_FullName != ''">
+                o_FullName = #{o_FullName},
+            </if>
+            <if test="o_DeptNo.d_Id != null and o_DeptNo.d_Id != 0">
+                o_DeptNo = #{o_DeptNo.d_Id},
+            </if>
+            <if test="o_Description != null and o_Description != ''">
+                o_Description = #{o_Description},
+            </if>
+            <if test="o_ModifyId.e_Id != null">
+                o_ModifyId = #{o_ModifyId.e_Id},
+            </if>
+            <if test="o_ModifyTime != null">
+                o_ModifyTime = #{o_ModifyTime},
+            </if>
+        </trim>
+    </update>
+
+    <select id="validationOrganization" resultType="int">
+        select count(*) from organization
+        <trim prefix="where">
+            <if test="o_Code != null and o_Code != ''">
+                o_Code = #{o_Code} and o_id <![CDATA[ <> ]]> #{o_Id}
+            </if>
+            <if test="o_Name != null and o_Name != ''">
+                o_Name = #{o_Name} and o_id <![CDATA[ <> ]]> #{o_Id}
+            </if>
+            <if test="o_FullName != null and o_FullName != ''">
+                o_FullName = #{o_FullName} and o_id <![CDATA[ <> ]]> #{o_Id}
+            </if>
+        </trim>
+    </select>
+
+    <delete id="delOrganization">
+        delete from organization where o_id = #{o_Id}
+    </delete>
+</mapper>

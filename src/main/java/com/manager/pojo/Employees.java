@@ -10,17 +10,41 @@ public class Employees {
     private String e_LoginName;
     private String e_Pwd;
     private String e_RealName;
-    private DataDictionary e_Sex;
+    private Sex e_Sex;
     private String e_Phone;
     private Role e_Role;
     private Dept e_DeptId;
-    private Integer e_Status;
+    private Employees e_Superior;
+    private Status e_Status;
     private Date e_CreateTime;
     private Employees e_ModifyId;
     private Date e_ModifyTime;
     private String e_Description;
     private Date e_LastLoginTime;
 
+    public Sex getE_Sex() {
+        return e_Sex;
+    }
+
+    public void setE_Sex(Sex e_Sex) {
+        this.e_Sex = e_Sex;
+    }
+
+    public Status getE_Status() {
+        return e_Status;
+    }
+
+    public void setE_Status(Status e_Status) {
+        this.e_Status = e_Status;
+    }
+
+    public Employees getE_Superior() {
+        return e_Superior;
+    }
+
+    public void setE_Superior(Employees e_Superior) {
+        this.e_Superior = e_Superior;
+    }
 
     public Employees(){}
 
@@ -76,14 +100,6 @@ public class Employees {
         this.e_RealName = e_RealName;
     }
 
-    public DataDictionary getE_Sex() {
-        return e_Sex;
-    }
-
-    public void setE_Sex(DataDictionary e_Sex) {
-        this.e_Sex = e_Sex;
-    }
-
     public String getE_Phone() {
         return e_Phone;
     }
@@ -106,14 +122,6 @@ public class Employees {
 
     public void setE_DeptId(Dept e_DeptId) {
         this.e_DeptId = e_DeptId;
-    }
-
-    public Integer getE_Status() {
-        return e_Status;
-    }
-
-    public void setE_Status(Integer e_Status) {
-        this.e_Status = e_Status;
     }
 
     public Date getE_CreateTime() {

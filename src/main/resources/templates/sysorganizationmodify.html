@@ -15,37 +15,46 @@
 <body>
 <div class="x-body layui-anim layui-anim-up">
     <fieldset class="layui-elem-field">
-        <legend>角色添加</legend>
+        <legend>组织信息修改</legend>
         <div class="layui-field-box">
-            <form class="layui-form" onsubmit="return addRole()" id="form1">
-                <table class="layui-table">
-                    <tbody>
-                    <tr>
-                        <th>角色编码</th>
+            <form class="layui-form" onsubmit="return modifyOrganization()" id="form1">
+                <input name="o_Id" id="o_Id" th:value="${newOrganization.o_Id}" hidden/>
+                <table class="layui-table" lay-skin="nob">
+                    <tr style="border: 0px">
+                        <td>组织编码</td>
                         <td>
-                            <input name="r_Code" id="r_Code" class="layui-input" required type="text" onblur="validationCode()"/>
-                            <label id="r_CodePrompt" style="color: red" hidden>* 已存在该角色编码</label>
+                            <input name="o_Code" id="o_Code" class="layui-input" th:value="${newOrganization.o_Code}" onblur="validationO_Code()"/>
+                            <label id="o_CodePrompt" style="color: red" hidden>* 已存在该组织编码</label>
                         </td>
                     </tr>
                     <tr>
-                        <th>角色名称</th>
+                        <td>组织简称</td>
                         <td>
-                            <input name="r_Name" id="r_Name" class="layui-input" required type="text" lay onblur="validationName()"/>
-                            <label id="r_NamePrompt" style="color: red" hidden>* 已存在该角色名称</label>
+                            <input name="o_Name" id="o_Name" class="layui-input" th:value="${newOrganization.o_Name}" onblur="validationO_Name()"/>
+                            <label id="o_NamePrompt" style="color: red" hidden>* 已存在该组织简称</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>组织全称</td>
+                        <td>
+                            <input name="o_FullName" id="o_FullName" class="layui-input" th:value="${newOrganization.o_FullName}" onblur="validationO_FullName()">
+                            <label id="o_FullNamePrompt" style="color: red" hidden>* 已存在该组织全称</label>
                         </td>
                     </tr>
                     <tr>
                         <td>所属部门</td>
                         <td>
-                            <select name="r_DeptNo.d_Id" id="d_id" class="layui-select" style="width: 200px;height: 30px">
+                            <select name="o_DeptNo.d_Id" class="layui-select-none" style="width: 200px;height: 30px">
                                 <option value="0">--请选择--</option>
+                                <option th:selected="${newOrganization.o_DeptNo.d_Id eq dept.d_Id}" th:each="dept:${depts}"
+                                        th:value="${dept.d_Id}" th:text="${dept.d_Name}"></option>
                             </select>
                         </td>
                     </tr>
                     <tr>
                         <td>备注信息</td>
                         <td>
-                            <textarea name="r_Description" class="layui-textarea"></textarea>
+                            <textarea name="o_Description" class="layui-textarea" th:text="${newOrganization.o_Description}"></textarea>
                         </td>
                     </tr>
                     <tr>
@@ -54,7 +63,6 @@
                             <input type="button" value="返回" class="layui-btn layui-bg-blue" onclick="back()"/>
                         </td>
                     </tr>
-                    </tbody>
                 </table>
             </form>
         </div>
@@ -62,7 +70,7 @@
 </div>
 <!-- jQuery -->
 <script src="/static/lib/jquery/dist/jquery.min.js"></script>
-<script src="/static/js/sysroleadd.js"></script>
+<script src="/static/js/sysorganizationmodify.js"></script>
 <script th:inline="javascript">
 
     var _hmt = _hmt || [];

@@ -31,6 +31,14 @@
                     <td th:text="${newRole.r_DeptNo.d_Name}"></td>
                 </tr>
                 <tr>
+                    <td>操作人</td>
+                    <td th:text="${newRole.r_ModifyId.e_RealName}"></td>
+                </tr>
+                <tr>
+                    <td>最后修改时间</td>
+                    <td th:text="${#dates.format(newRole.r_ModifyTime)}"></td>
+                </tr>
+                <tr>
                     <td>备注信息</td>
                     <td th:text="${newRole.r_Description}"></td>
                 </tr>
@@ -50,38 +58,6 @@
         s.parentNode.insertBefore(hm, s);
     })();
 
-    $(document).ready(function () {
-        function time() {
-            var date = new Date();
-            var year = date.getFullYear();
-            var month = date.getMonth() + 1;
-            var day = date.getDate();
-            var hour = date.getHours();
-            var minute = date.getMinutes();
-            var second = date.getSeconds();
-
-            if (month < 10) {
-                month = "0" + month;
-            }
-            if (day < 10) {
-                day = "0" + day;
-            }
-            if (hour < 10) {
-                hour = "0" + hour;
-            }
-            if (minute < 10) {
-                minute = "0" + minute;
-            }
-            if (second < 10) {
-                second = "0" + second;
-            }
-
-            $('#time').html(year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second);
-        }
-
-        time();
-        setInterval(time, 1000);
-    });
 </script>
 </body>
 </html>

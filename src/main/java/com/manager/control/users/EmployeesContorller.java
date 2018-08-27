@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -83,6 +84,15 @@ public class EmployeesContorller {
         }else{
             return "error";
         }
+    }
 
+    @RequestMapping("/getEmployee")
+    public ModelAndView getEmployee(HttpSession session){
+        ModelAndView mv = new ModelAndView();
+        Employees employee = (Employees) session.getAttribute("loginEmployee");
+        Employees newEmployee = employeesService.getEmployees(employee);
+        mv.addObject("newEmployee",newEmployee);
+        mv.setViewName("syspersonalInfo");
+        return mv;
     }
 }

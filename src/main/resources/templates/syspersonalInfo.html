@@ -15,42 +15,42 @@
 <body>
 <div class="x-body layui-anim layui-anim-up">
     <fieldset class="layui-elem-field">
-        <legend th:text="${session.loginEmployee.e_LoginName}"></legend>
+        <legend th:text="${newEmployee.e_LoginName}"></legend>
         <div class="layui-field-box">
             <table class="layui-table">
                 <tbody>
                 <tr>
                     <th>员工姓名</th>
-                    <td th:text="${session.loginEmployee.e_RealName}"></td>
+                    <td th:text="${newEmployee.e_RealName}"></td>
                 </tr>
                 <tr>
                     <th>员工编号</th>
-                    <td th:text="${session.loginEmployee.e_Code}"></td>
+                    <td th:text="${newEmployee.e_Code}"></td>
                 </tr>
                 <tr>
                     <th>所在部门</th>
-                    <td th:text="${session.loginEmployee.e_DeptId.d_Name}"></td>
+                    <td th:text="${newEmployee.e_DeptId.d_Name}"></td>
                 </tr>
                 <tr>
                     <th>当前状态</th>
-                    <td>Apache/2.4.23 (Win32) OpenSSL/1.0.2j mod_fcgid/2.3.9</td>
+                    <td th:text="${newEmployee.e_Status.st_Name}"></td>
                 </tr>
                 <tr>
                     <th>系统角色</th>
-                    <td th:text="${session.loginEmployee.e_Role.r_Name}"></td>
+                    <td th:text="${newEmployee.e_Role.r_Name}"></td>
                 </tr>
                 <tr>
                     <th>创建时间</th>
-                    <td th:text="${#dates.format(session.loginEmployee.e_CreateTime)}"></td>
+                    <td th:text="${#dates.format(newEmployee.e_CreateTime)}"></td>
                 </tr>
                 <tr>
                     <th>登录ID</th>
-                    <td th:text="${session.loginEmployee.e_LoginName}"></td>
+                    <td th:text="${newEmployee.e_LoginName}"></td>
                 </tr>
                 <tr>
                     <th>联系电话</th>
                     <td>
-                        <input name="e_Phone" class="layui-input layui-input-inline" id="phone" style="width: 200px" disabled type="text" th:attr="value=${session.loginEmployee.e_Phone}"/>
+                        <input name="e_Phone" class="layui-input layui-input-inline" id="phone" style="width: 200px" disabled type="text" th:attr="value=${newEmployee.e_Phone}"/>
                         <input type="button" value="修改" class="layui-btn" onclick="modify(this)"/>
                     </td>
                 </tr>
@@ -62,9 +62,8 @@
 <!-- jQuery -->
 <script src="/static/lib/jquery/dist/jquery.min.js"></script>
 <script th:inline="javascript">
-    /*<![CDATA[*/
+
     var empId = [[${session.loginEmployee.e_Id}]];
-    /*]]>*/
 
     function modify(modify) {
         if($("#phone").attr("disabled")=="disabled"){
@@ -100,38 +99,6 @@
         s.parentNode.insertBefore(hm, s);
     })();
 
-    $(document).ready(function () {
-        function time() {
-            var date = new Date();
-            var year = date.getFullYear();
-            var month = date.getMonth() + 1;
-            var day = date.getDate();
-            var hour = date.getHours();
-            var minute = date.getMinutes();
-            var second = date.getSeconds();
-
-            if (month < 10) {
-                month = "0" + month;
-            }
-            if (day < 10) {
-                day = "0" + day;
-            }
-            if (hour < 10) {
-                hour = "0" + hour;
-            }
-            if (minute < 10) {
-                minute = "0" + minute;
-            }
-            if (second < 10) {
-                second = "0" + second;
-            }
-
-            $('#time').html(year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second);
-        }
-
-        time();
-        setInterval(time, 1000);
-    });
 </script>
 </body>
 </html>

@@ -16,7 +16,7 @@ function x() {
                 "previous": "上一页",
                 "next": "下一页",
                 "processing": "正在处理中...."
-            },
+            }
         },
         "columnDefs": [
             {"title": "角色名称", "targets": 0},
@@ -43,7 +43,7 @@ function x() {
             {
                 "data": "r_Id","width":"150px", "render": function (data, type, full, meta) {
                     return "<div class=\"layui-btn-group\">\n" +
-                        "    <a class=\"layui-btn layui-btn-sm\" onclick=\"x_admin_show(null,'/getRole/"+data+"/get',600,300)\">\n" +
+                        "    <a class=\"layui-btn layui-btn-sm\" onclick=\"x_admin_show(null,'/getRole/"+data+"/get',600,400)\">\n" +
                         "        <i class=\"layui-icon\">&#xe62a;</i>\n" +
                         "    </a>\n" +
                         "    <a class=\"layui-btn layui-btn-sm\" onclick=\"x_admin_show(null,'/getRole/"+data+"/modify',600,450,true)\">\n" +
@@ -63,6 +63,25 @@ function x() {
 
     $("#roleQuery").on("click", function () {
         $("#roleInfo").DataTable().ajax.reload();
+    });
+}
+
+function delRole(id,name) {
+    layer.confirm("确认删除角色:"+name, {icon: 3, title:'提示'},function () {
+        $.ajax({
+            type:"POST",
+            url:"/delRole",
+            data:{r_Id:id},
+            dataType:"JSON",
+            success:function (data) {
+                if(data == true){
+                    layer.msg("删除成功!");
+                    $("#roleInfo").DataTable().ajax.reload();
+                }else {
+                    layer.msg("删除失败!");
+                }
+            }
+        })
     });
 }
 
