@@ -15,6 +15,11 @@ public class ServiceFaqServiceImpl implements ServiceFaqService {
     private ServiceFaqMapper serviceFaqMapper;
 
     @Override
+    public Integer addFaq(ServiceFaq serviceFaq) {
+        return serviceFaqMapper.addFaq(serviceFaq);
+    }
+
+    @Override
     public Integer updateFaq(ServiceFaq serviceFaq) {
         return serviceFaqMapper.updateFaq(serviceFaq);
     }

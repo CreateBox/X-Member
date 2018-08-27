@@ -5,6 +5,7 @@ import com.manager.pojo.ServiceFaq;
 import com.manager.service.datadictionary.DataDictionaryService;
 import com.manager.service.servicees.ServiceFaqService;
 import com.manager.util.PageUtil;
+import com.manager.util.SessionUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -79,6 +80,26 @@ public class serviceFAQControl {
     public Object modifyFaq(ServiceFaq serviceFaq) {
         Integer integer = serviceFaqService.updateFaq(serviceFaq);
         if (1 == integer)
+            return true;
+        return false;
+    }
+
+
+    @RequestMapping("/toAddFaq")
+    public ModelAndView toAddFaq() {
+        ModelAndView mv = new ModelAndView();
+        List<DataDictionary> service_type = dataDictionaryService.getservice_type("service_type");
+        mv.addObject("service_type", service_type);
+        mv.setViewName("faqadd");
+        return mv;
+    }
+
+    @RequestMapping("/addFaq")
+    @ResponseBody
+    public Object addFaq(ServiceFaq serviceFaq, HttpSession session) {
+        serviceFaq.setSf_Create(SessionUtil.get(session));
+        Integer integer = serviceFaqService.addFaq(serviceFaq);
+        if (integer == 1)
             return true;
         return false;
     }

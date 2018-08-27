@@ -16,4 +16,6 @@ public interface ServiceFaqMapper {
     Integer delFaq(@Param("sf_id") Integer sf_id);
 
     Integer updateFaq(@Param("faq") ServiceFaq serviceFaq);
+
+    Integer addFaq(@Param("faq") ServiceFaq serviceFaq);
 }

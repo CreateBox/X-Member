@@ -43,4 +43,8 @@
         set sf_lastTime=default ,sf_type=#{faq.sf_Type.dd_ValueId},sf_point=#{faq.sf_Point},sf_description=#{faq.sf_Description}
         where sf_id=#{faq.sf_Id}
     </update>
+    <insert id="addFaq">
+        INSERT INTO service_FAQ
+        VALUE(DEFAULT,#{faq.sf_Title},#{faq.sf_Type.dd_ValueId},#{faq.sf_Create.e_Id},DEFAULT,#{faq.sf_Point},#{faq.sf_Description})
+    </insert>
 </mapper>

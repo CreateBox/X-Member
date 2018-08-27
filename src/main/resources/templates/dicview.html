@@ -29,8 +29,8 @@
 <body class="layui-anim layui-anim-up">
 <div class="x-nav">
       <span class="layui-breadcrumb">
-        <a><cite>服务管理</cite></a>
-        <a><cite>常见问题管理</cite></a>
+        <a><cite>系统管理</cite></a>
+        <a><cite>数据字典</cite></a>
       </span>
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
        href="javascript:location.replace(location.href);" title="刷新">
@@ -40,17 +40,10 @@
     <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so">
             <label class="layui-form-label layui-input-inline"></label>
-            <input class="layui-input layui-input-inline" placeholder="问题名称" id="sf_Title"/>
-            <div class="layui-input-inline">
-                <select id="sf_Type">
-                    <option value="">问题类型</option>
-                    <option th:each="temp : ${s_type}" th:text="${temp.getDd_ValueName()}"
-                            th:value="${temp.getDd_ValueId()}"></option>
-                </select>
-            </div>
+            <input class="layui-input layui-input-inline" placeholder="字典编码" id="dd_TypeCode"/>
             <button class="layui-btn data-table" type="button" lay-filter="sreach"><i class="layui-icon">&#xe615;</i>
             </button>
-            <button class="layui-btn" type="button" onclick="x_admin_show(null,'/toAddFaq',600,530,true)"><i
+            <button class="layui-btn" type="button" onclick="x_admin_show(null,'/toDicAdd',600,525,true)"><i
                     class="layui-icon">&#xe654;</i>
             </button>
         </form>
@@ -99,21 +92,21 @@
                 }
             },
             "columnDefs": [
-                {"title": "问题ID", "targets": 0},
-                {"title": "标题", "targets": 1},
-                {"title": "类型", "targets": 2},
-                {"title": "创建人", "targets": 3},
+                {"title": "字典ID", "targets": 0},
+                {"title": "字典名称", "targets": 1},
+                {"title": "字典编码", "targets": 2},
+                {"title": "数据值", "targets": 3},
                 {"title": "最后操作时间", "targets": 4},
-                {"title": "操作", "targets": 5}
+                {"title": "操作人", "targets": 5},
+                {"title": "操作", "targets": 6}
             ],
             "ajax": {
-                "url": "/serviceFAQ.json",
+                "url": "/dicview.json",
                 "type": "POST",
                 "dataType": "json",
                 data: function (data) {
                     var param = {
-                        "sf_Title": $("#sf_Title").val(),
-                        "sf_Type.dd_ValueId": $("#sf_Type").val(),
+                        "dd_TypeCode": $("#dd_TypeCode").val()
                     };
                     param.length = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
                     param.start = data.start;//开始的记录序号
@@ -122,30 +115,24 @@
                 }
             },
             "columns": [
-                {"data": "sf_Id"},
-                {"data": "sf_Title"},
+                {"data": "dd_Id"},
+                {"data": "dd_TypeName"},
+                {"data": "dd_TypeCode"},
+                {"data": "dd_ValueId"},
+                {"data": "dd_LastTime"},
                 {
-                    "data": "sf_Type", "render": function (data) {
-                        return data.dd_ValueName;
+                    "data": "dd_OperationId", "render": function (data, type, full, meta) {
+                        return full.dd_OperationId.e_RealName;
                     }
                 },
                 {
-                    "data": "sf_Create", "render": function (data) {
-                        return data.e_RealName;
-                    }
-                },
-                {"data": "sf_LastTime"},
-                {
-                    "data": "sf_Id", "width": "120px", "render": function (data, type, full, meta) {
+                    "data": "dd_Id", "width": "80px", "render": function (data, type, full, meta) {
                         var btn = "<div class=\"layui-btn-group\">\n" +
-                            "    <a class=\"layui-btn layui-btn-sm\" title='查看' onclick=\"x_admin_show(null,'/getFaq/" + data + "/get',600,430)\">\n" +
+                            "    <a class=\"layui-btn layui-btn-sm\" title='查看' onclick=\"x_admin_show(null,'/getDic/" + data + "/get',600,350)\">\n" +
                             "        <i class=\"layui-icon\">&#xe62a;</i>\n" +
                             "    </a>\n";
-                        btn = btn + "    <a class=\"layui-btn layui-btn-sm\" title='修改' onclick=\"x_admin_show(null,'/getFaq/" + data + "/modify',600,510,true)\">\n" +
+                        btn = btn + "    <a class=\"layui-btn layui-btn-sm\" title='修改' onclick=\"x_admin_show(null,'/getDic/" + data + "/modify',600,420,true)\">\n" +
                             "        <i class=\"layui-icon\">&#xe642;</i>\n" +
-                            "    </a>\n";
-                        btn = btn + "    <a class=\"layui-btn layui-btn-sm\" title='删除' onclick=\"delFaq(" + data + ",'" + full.sf_Title + "')\">\n" +
-                            "        <i class=\"layui-icon\">&#xe640;</i>\n" +
                             "    </a>\n";
                         btn = btn + "</div>";
                         return btn;
@@ -156,25 +143,6 @@
 
         $(".data-table").on("click", function () {
             $('#datatable').DataTable().ajax.reload();
-        });
-    }
-
-    function delFaq(id, name) {
-        layer.confirm("确认删除问题标题:" + name, {icon: 3, title: '提示'}, function () {
-            $.ajax({
-                type: "POST",
-                url: "/delFaq",
-                data: {s_Id: id},
-                dataType: "JSON",
-                success: function (data) {
-                    if (data == true) {
-                        layer.msg("删除成功!");
-                    } else {
-                        layer.msg("删除失败!");
-                    }
-                    $("#datatable").DataTable().ajax.reload();
-                }
-            })
         });
     }
 </script>

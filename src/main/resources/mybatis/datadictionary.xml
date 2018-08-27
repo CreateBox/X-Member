@@ -7,4 +7,37 @@
     <select id="getservice_type" resultType="DataDictionary">
         SELECT * FROM data_dictionary WHERE dd_typeCode = #{dd_typeCode}
     </select>
+    <select id="getDataDicList" resultType="DataDictionary">
+        SELECT d.*,e.`e_realName` `dd_OperationId.e_RealName`
+        FROM data_dictionary d
+        INNER JOIN employees e ON d.`dd_operationId`=e.`e_id`
+        WHERE d.`dd_typeCode` LIKE CONCAT('%',#{dic.dd_TypeCode},'%')
+        ORDER BY d.dd_typeCode
+        LIMIT #{start},#{length}
+    </select>
+    <select id="getDataDicCount" resultType="_int">
+        SELECT count(1)
+        FROM data_dictionary d
+        INNER JOIN employees e ON d.`dd_operationId`=e.`e_id`
+        WHERE d.`dd_typeCode` LIKE CONCAT('%',#{dic.dd_TypeCode},'%')
+    </select>
+    <select id="getDicById" resultType="DataDictionary">
+        SELECT d.*,e.`e_realName` `dd_OperationId.e_RealName`
+        FROM data_dictionary d
+        INNER JOIN employees e ON d.`dd_operationId`=e.`e_id`
+        WHERE d.dd_id=#{id}
+    </select>
+    <update id="updateDic">
+        update data_dictionary set dd_comment=#{dic.dd_Comment} where dd_id=#{dic.dd_Id}
+    </update>
+    <select id="getCodeValCount" resultType="_int">
+        SELECT COUNT(1)
+        FROM data_dictionary d
+        WHERE d.`dd_typeCode` = #{dic.dd_TypeCode}
+        AND d.`dd_valueId` = #{dic.dd_ValueId}
+    </select>
+    <insert id="addDic">
+        INSERT INTO data_dictionary
+        VALUE(DEFAULT,#{dic.dd_TypeCode},#{dic.dd_TypeName},#{dic.dd_ValueId},#{dic.dd_ValueName},#{dic.dd_OperationId.e_Id},NOW(),#{dic.dd_Comment})
+    </insert>
 </mapper>

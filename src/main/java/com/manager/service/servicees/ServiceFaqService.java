@@ -15,4 +15,6 @@ public interface ServiceFaqService {
 
     Integer updateFaq(ServiceFaq serviceFaq);
 
+    Integer addFaq(ServiceFaq serviceFaq);
+
 }
