@@ -25,9 +25,6 @@ INSERT INTO data_dictionary VALUE(DEFAULT,'service_status','服务状态',3,'已
 INSERT INTO data_dictionary VALUE(DEFAULT,'service_status','服务状态',4,'已处理',1,NOW(),NULL);
 INSERT INTO data_dictionary VALUE(DEFAULT,'service_status','服务状态',5,'已反馈',1,NOW(),NULL);
 
-INSERT INTO data_dictionary VALUE(DEFAULT,'sex','性别',1,'男',1,NOW(),NULL);
-INSERT INTO data_dictionary VALUE(DEFAULT,'sex','性别',0,'女',1,NOW(),NULL);
-
 INSERT INTO data_dictionary VALUE(DEFAULT,'customer_type','客户类型',1,'VIP客户',1,NOW(),NULL);
 INSERT INTO data_dictionary VALUE(DEFAULT,'customer_type','客户类型',2,'金卡客户',1,NOW(),NULL);
 INSERT INTO data_dictionary VALUE(DEFAULT,'customer_type','客户类型',3,'银卡客户',1,NOW(),NULL);
@@ -47,9 +44,6 @@ INSERT INTO data_dictionary VALUE(DEFAULT,'order_type','订单类型',2,'加急�
 
 INSERT INTO data_dictionary VALUE(DEFAULT,'customer_distribution','分配状态',1,'已分配',1,NOW(),NULL);
 INSERT INTO data_dictionary VALUE(DEFAULT,'customer_distribution','分配状态',2,'未分配',1,NOW(),NULL);
-
-INSERT INTO data_dictionary VALUE(DEFAULT,'emp_status','员工状态',2,'正常',1,NOW(),NULL);
-INSERT INTO data_dictionary VALUE(DEFAULT,'emp_status','员工状态',2,'禁用',1,NOW(),NULL);
 
 DROP TABLE IF EXISTS employees;
 CREATE TABLE employees
