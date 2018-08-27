@@ -25,9 +25,6 @@ INSERT INTO data_dictionary VALUE(DEFAULT,'service_status','服务状态',3,'已
 INSERT INTO data_dictionary VALUE(DEFAULT,'service_status','服务状态',4,'已处理',1,NOW(),NULL);
 INSERT INTO data_dictionary VALUE(DEFAULT,'service_status','服务状态',5,'已反馈',1,NOW(),NULL);
 
-INSERT INTO data_dictionary VALUE(DEFAULT,'sex','性别',1,'男',1,NOW(),NULL);
-INSERT INTO data_dictionary VALUE(DEFAULT,'sex','性别',0,'女',1,NOW(),NULL);
-
 INSERT INTO data_dictionary VALUE(DEFAULT,'customer_type','客户类型',1,'VIP客户',1,NOW(),NULL);
 INSERT INTO data_dictionary VALUE(DEFAULT,'customer_type','客户类型',2,'金卡客户',1,NOW(),NULL);
 INSERT INTO data_dictionary VALUE(DEFAULT,'customer_type','客户类型',3,'银卡客户',1,NOW(),NULL);
@@ -61,7 +58,7 @@ CREATE TABLE employees
 	e_role INT COMMENT '系统角色',
 	e_deptId INT COMMENT '所属部门',
 	e_superior INT COMMENT '所属上级',
-	e_status VARCHAR(10) NOT NULL COMMENT '当前状态',
+	e_status INT NOT NULL COMMENT '当前状态',
 	e_createTime DATETIME NOT NULL COMMENT '创建时间',
 	e_modifyId INT COMMENT '操作人',
 	e_modifyTime DATETIME COMMENT '修改时间',
@@ -69,7 +66,7 @@ CREATE TABLE employees
 	e_description VARCHAR(255) COMMENT '备注信息'
 );
 
-INSERT INTO employees VALUES(DEFAULT,'ZHB007','admin',MD5('123456'),'尚鸿运',1,'13312341234',1,1,1,'正常',NOW(),1,NULL,NULL,NULL);
+INSERT INTO employees VALUES(DEFAULT,'ZHB007','admin',MD5('123456'),'尚鸿运',1,'13312341234',1,1,1,1,NOW(),1,NULL,NULL,NULL);
 
 DROP TABLE IF EXISTS `status`;
 CREATE TABLE `status`

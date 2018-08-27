@@ -25,7 +25,7 @@
     </resultMap>
 
     <select id="getEmployees" resultMap="EmployeesMap">
-        select e.*,d.*,r.*,dd.*,s.*,st.* from employees e,dept d,data_dictionary dd, role r,sex s,status st
+        select e.*,d.*,r.*,s.*,st.* from employees e,dept d, role r,sex s,status st
         <trim prefix="where" prefixOverrides="and">
             e.e_role = r.r_id and e.e_deptid = d.d_id and e.e_modifyId = e.e_id and e.e_sex = s.sex_id and e.e_status = st.st_id
             <if test="e_LoginName != null and e_LoginName != ''">
