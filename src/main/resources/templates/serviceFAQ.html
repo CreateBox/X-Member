@@ -30,7 +30,7 @@
 <div class="x-nav">
       <span class="layui-breadcrumb">
         <a><cite>服务管理</cite></a>
-        <a><cite>服务创建</cite></a>
+        <a><cite>常见问题管理</cite></a>
       </span>
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
        href="javascript:location.replace(location.href);" title="刷新">
@@ -40,24 +40,18 @@
     <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so">
             <label class="layui-form-label layui-input-inline"></label>
-            <input class="layui-input layui-input-inline" placeholder="服务名称" id="s_Name"/>
+            <input class="layui-input layui-input-inline" placeholder="问题名称" id="sf_Title"/>
             <div class="layui-input-inline">
-                <select id="s_Type">
-                    <option value="">服务类型</option>
+                <select id="sf_Type">
+                    <option value="">问题类型</option>
                     <option th:each="temp : ${s_type}" th:text="${temp.getDd_ValueName()}"
-                            th:value="${temp.getDd_ValueId()}"></option>
-                </select>
-            </div>
-            <div class="layui-input-inline">
-                <select id="s_Status">
-                    <option value="">服务状态</option>
-                    <option th:each="temp : ${s_status}" th:text="${temp.getDd_ValueName()}"
                             th:value="${temp.getDd_ValueId()}"></option>
                 </select>
             </div>
             <button class="layui-btn data-table" type="button" lay-filter="sreach"><i class="layui-icon">&#xe615;</i>
             </button>
-            <button class="layui-btn" type="button"><i class="layui-icon">&#xe654;</i>
+            <button class="layui-btn" type="button" onclick="x_admin_show(null,'/toAddFaq',600,530,true)"><i
+                    class="layui-icon">&#xe654;</i>
             </button>
         </form>
     </div>
@@ -105,24 +99,21 @@
                 }
             },
             "columnDefs": [
-                {"title": "服务ID", "targets": 0},
-                {"title": "服务名称", "targets": 1},
-                {"title": "服务类型", "targets": 2},
-                {"title": "服务状态", "targets": 3},
+                {"title": "问题ID", "targets": 0},
+                {"title": "标题", "targets": 1},
+                {"title": "类型", "targets": 2},
+                {"title": "创建人", "targets": 3},
                 {"title": "最后操作时间", "targets": 4},
-                {"title": "操作人", "targets": 5},
-                {"title": "待处理人", "targets": 6},
-                {"title": "操作", "targets": 7}
+                {"title": "操作", "targets": 5}
             ],
             "ajax": {
-                "url": "/serviceesList.json",
+                "url": "/serviceFAQ.json",
                 "type": "POST",
                 "dataType": "json",
                 data: function (data) {
                     var param = {
-                        "s_Name": $("#s_Name").val(),
-                        "s_Type.dd_ValueId": $("#s_Type").val(),
-                        "s_Status.dd_ValueId": $("#s_Status").val()
+                        "sf_Title": $("#sf_Title").val(),
+                        "sf_Type.dd_ValueId": $("#sf_Type").val(),
                     };
                     param.length = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
                     param.start = data.start;//开始的记录序号
@@ -131,49 +122,31 @@
                 }
             },
             "columns": [
-                {"data": "s_Id"},
-                {"data": "s_Name"},
+                {"data": "sf_Id"},
+                {"data": "sf_Title"},
                 {
-                    "data": "s_Type", "render": function (data) {
+                    "data": "sf_Type", "render": function (data) {
                         return data.dd_ValueName;
                     }
                 },
                 {
-                    "data": "s_Status", "render": function (data) {
-                        return data.dd_ValueName;
-                    }
-                },
-                {"data": "s_LastTime"},
-                {
-                    "data": "s_Operator", "render": function (data) {
+                    "data": "sf_Create", "render": function (data) {
                         return data.e_RealName;
                     }
                 },
+                {"data": "sf_LastTime"},
                 {
-                    "data": "s_Processor", "render": function (data) {
-                        return data.e_RealName;
-                    }
-                }, {
-                    "data": "s_Id", "width": "160px", "render": function (data, type, full, meta) {
+                    "data": "sf_Id", "width": "120px", "render": function (data, type, full, meta) {
                         var btn = "<div class=\"layui-btn-group\">\n" +
-                            "    <a class=\"layui-btn layui-btn-sm\" title='查看' onclick=\"x_admin_show(null,'/getSer/" + data + "/get',600,400)\">\n" +
+                            "    <a class=\"layui-btn layui-btn-sm\" title='查看' onclick=\"x_admin_show(null,'/getFaq/" + data + "/get',600,430)\">\n" +
                             "        <i class=\"layui-icon\">&#xe62a;</i>\n" +
                             "    </a>\n";
-                        if ("新创建" == full.s_Status.dd_ValueName) {
-                            btn = btn + "    <a class=\"layui-btn layui-btn-sm\" title='修改' onclick=\"x_admin_show(null,'/getSer/" + data + "/modify',600,620,true)\">\n" +
-                                "        <i class=\"layui-icon\">&#xe642;</i>\n" +
-                                "    </a>\n";
-                        }
-                        if ("已提交" == full.s_Status.dd_ValueName) {
-                            btn = btn + "    <a class=\"layui-btn layui-btn-sm\" title='删除' onclick=\"delSer(" + data + ",'" + full.s_Name + "')\">\n" +
-                                "        <i class=\"layui-icon\">&#xe640;</i>\n" +
-                                "    </a>\n";
-                        }
-                        if ("新创建" == full.s_Status.dd_ValueName) {
-                            btn = btn + "    <a class=\"layui-btn layui-btn-sm\" title='提交' onclick=\"subSer(" + data + ",'" + full.s_Name + "')\">\n" +
-                                "        <i class=\"layui-icon\">&#xe681;</i>\n" +
-                                "    </a>\n";
-                        }
+                        btn = btn + "    <a class=\"layui-btn layui-btn-sm\" title='修改' onclick=\"x_admin_show(null,'/getFaq/" + data + "/modify',600,510,true)\">\n" +
+                            "        <i class=\"layui-icon\">&#xe642;</i>\n" +
+                            "    </a>\n";
+                        btn = btn + "    <a class=\"layui-btn layui-btn-sm\" title='删除' onclick=\"delFaq(" + data + ",'" + full.sf_Title + "')\">\n" +
+                            "        <i class=\"layui-icon\">&#xe640;</i>\n" +
+                            "    </a>\n";
                         btn = btn + "</div>";
                         return btn;
                     }
@@ -186,30 +159,11 @@
         });
     }
 
-    function subSer(id, name) {
-        layer.confirm("确认提交服务名称:" + name, {icon: 3, title: '提示'}, function () {
+    function delFaq(id, name) {
+        layer.confirm("确认删除问题标题:" + name, {icon: 3, title: '提示'}, function () {
             $.ajax({
                 type: "POST",
-                url: "/subSer",
-                data: {s_Id: id},
-                dataType: "JSON",
-                success: function (data) {
-                    if (data == true) {
-                        layer.msg("提交成功!");
-                    } else {
-                        layer.msg("提交失败!");
-                    }
-                    $("#datatable").DataTable().ajax.reload();
-                }
-            })
-        });
-    }
-
-    function delSer(id, name) {
-        layer.confirm("确认删除服务名称:" + name, {icon: 3, title: '提示'}, function () {
-            $.ajax({
-                type: "POST",
-                url: "/delSer",
+                url: "/delFaq",
                 data: {s_Id: id},
                 dataType: "JSON",
                 success: function (data) {

@@ -14,6 +14,7 @@
         INNER JOIN employees op ON op.`e_id`=s.`s_operator`
         INNER JOIN employees pro ON pro.`e_id`=s.`s_processor`
         WHERE type.`dd_typeCode`='service_type' AND status.`dd_typeCode`='service_status'
+        AND (s.`s_operator` = #{ser.s_Operator.e_Id} OR s.`s_processor` = #{ser.s_Processor.e_Id})
         AND s.`s_name` LIKE CONCAT('%',#{ser.s_Name},'%')
         <if test="null != ser.s_Type.dd_ValueId">
             AND s.`s_type` = #{ser.s_Type.dd_ValueId}
@@ -27,6 +28,7 @@
     <select id="getServiceesCount" resultType="_int">
         SELECT COUNT(*) FROM servicees s
         <where>
+            AND (s.`s_operator` = #{ser.s_Operator.e_Id} OR s.`s_processor` = #{ser.s_Processor.e_Id})
             AND s.`s_name` LIKE CONCAT('%',#{ser.s_Name},'%')
             <if test="null != ser.s_Type.dd_ValueId">
                 AND s.`s_type` = #{ser.s_Type.dd_ValueId}
@@ -40,12 +42,12 @@
         DELETE FROM servicees WHERE s_Id=#{id}
     </delete>
     <update id="updateSerSub">
-        UPDATE servicees SET s_status = 2 , s_lastTime = default WHERE s_id = #{id}
+        UPDATE servicees SET s_status = 2 , s_lastTime = default WHERE s_id = #{id} AND s_status=1
     </update>
     <update id="updateSer">
         UPDATE servicees s
         SET s.`s_info`=#{s_info},s.`s_description`=#{s_description},s.`s_iPhone`=#{s_iPhone},s.`s_type` = #{s_Type.dd_ValueId} , s_lastTime = DEFAULT
-        WHERE s_id = #{s_Id}
+        WHERE s_id = #{s_Id} AND s_status=1
     </update>
     <select id="getSerById" resultType="Servicees">
         SELECT s.*,type.`dd_valueId` `s_Type.dd_ValueId`,type.`dd_valueName` `s_Type.dd_ValueName`,status.`dd_valueId` `s_status.dd_ValueId`,status.`dd_valueName` `s_status.dd_ValueName`,op.`e_realName` `s_operator.e_RealName`,pro.`e_realName` `s_processor.e_RealName`

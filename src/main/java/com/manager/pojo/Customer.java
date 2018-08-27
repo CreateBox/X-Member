@@ -1,6 +1,8 @@
 package com.manager.pojo;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class Customer {
@@ -11,6 +13,7 @@ public class Customer {
     private DataDictionary c_Type;
     private DataDictionary c_Status;
     private DataDictionary c_Allot;
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date c_Entertime;
     private Double c_Enteremp;
     private Servicees c_Service;

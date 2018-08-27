@@ -1,6 +1,8 @@
 package com.manager.pojo;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class DataDictionary {
@@ -10,7 +12,8 @@ public class DataDictionary {
     private String dd_TypeName;
     private Integer dd_ValueId;
     private String dd_ValueName;
-    private Integer dd_OperationId;
+    private Employees dd_OperationId;
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date dd_LastTime;
     private String dd_Comment;
 
@@ -54,11 +57,11 @@ public class DataDictionary {
         this.dd_ValueName = dd_ValueName;
     }
 
-    public Integer getDd_OperationId() {
+    public Employees getDd_OperationId() {
         return dd_OperationId;
     }
 
-    public void setDd_OperationId(Integer dd_OperationId) {
+    public void setDd_OperationId(Employees dd_OperationId) {
         this.dd_OperationId = dd_OperationId;
     }
 

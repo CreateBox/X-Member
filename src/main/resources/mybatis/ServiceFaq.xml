@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace mapper接口 必填 随便填值 防止SQL语句ID重名-->
+<mapper namespace="com.manager.mapper.ServiceFaqMapper">
+    <select id="getServiceFaqList" resultType="ServiceFaq">
+        SELECT sf.*,d.`dd_valueId` `sf_Type.dd_ValueId`,d.`dd_valueName` `sf_Type.dd_ValueName`,e.`e_id`
+        `sf_Create.e_Id`,e.`e_realName` `sf_Create.e_RealName` FROM service_FAQ sf
+        INNER JOIN data_dictionary d ON sf.`sf_type`=d.`dd_valueId`
+        INNER JOIN employees e ON sf.`sf_create`=e.`e_id`
+        WHERE d.`dd_typeCode`='service_type'
+        AND sf.`sf_title` LIKE CONCAT('%',#{faq.sf_Title},'%')
+        <if test="null != faq.sf_Type.dd_ValueId">
+            AND sf.`sf_type`=#{faq.sf_Type.dd_ValueId}
+        </if>
+        ORDER BY sf.sf_id
+        LIMIT #{start},#{length}
+
+    </select>
+    <select id="getServiceFaq" resultType="ServiceFaq">
+        SELECT sf.*,d.`dd_valueId` `sf_Type.dd_ValueId`,d.`dd_valueName` `sf_Type.dd_ValueName`,e.`e_id` `sf_Create.e_Id`,e.`e_realName` `sf_Create.e_RealName` FROM service_FAQ sf
+        INNER JOIN data_dictionary d ON sf.`sf_type`=d.`dd_valueId`
+        INNER JOIN employees e ON sf.`sf_create`=e.`e_id`
+        WHERE d.`dd_typeCode`='service_type'
+        AND sf_id=#{sf_id};
+    </select>
+    <select id="getServiceFaqCount" resultType="_int">
+        SELECT count(1) FROM service_FAQ sf
+        INNER JOIN data_dictionary d ON sf.`sf_type`=d.`dd_valueId`
+        INNER JOIN employees e ON sf.`sf_create`=e.`e_id`
+        WHERE d.`dd_typeCode`='service_type'
+        AND sf.`sf_title` LIKE CONCAT('%',#{faq.sf_Title},'%')
+        <if test="null != faq.sf_Type.dd_ValueId">
+            AND sf.`sf_type`=#{faq.sf_Type.dd_ValueId}
+        </if>
+    </select>
+    <delete id="delFaq">
+        delete from service_faq where sf_id=#{sf_id}
+    </delete>
+    <update id="updateFaq">
+        update service_faq
+        set sf_lastTime=default ,sf_type=#{faq.sf_Type.dd_ValueId},sf_point=#{faq.sf_Point},sf_description=#{faq.sf_Description}
+        where sf_id=#{faq.sf_Id}
+    </update>
+    <insert id="addFaq">
+        INSERT INTO service_FAQ
+        VALUE(DEFAULT,#{faq.sf_Title},#{faq.sf_Type.dd_ValueId},#{faq.sf_Create.e_Id},DEFAULT,#{faq.sf_Point},#{faq.sf_Description})
+    </insert>
+</mapper>

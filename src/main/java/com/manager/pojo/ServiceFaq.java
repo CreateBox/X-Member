@@ -1,6 +1,8 @@
 package com.manager.pojo;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class ServiceFaq {
@@ -8,8 +10,11 @@ public class ServiceFaq {
     private Integer sf_Id;
     private String sf_Title;
     private DataDictionary sf_Type;
-    private DataDictionary sf_Create;
+    private Employees sf_Create;
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date sf_LastTime;
+    private String sf_Point;
+    private String sf_Description;
 
     public Integer getSf_Id() {
         return sf_Id;
@@ -35,11 +40,11 @@ public class ServiceFaq {
         this.sf_Type = sf_Type;
     }
 
-    public DataDictionary getSf_Create() {
+    public Employees getSf_Create() {
         return sf_Create;
     }
 
-    public void setSf_Create(DataDictionary sf_Create) {
+    public void setSf_Create(Employees sf_Create) {
         this.sf_Create = sf_Create;
     }
 
@@ -49,5 +54,21 @@ public class ServiceFaq {
 
     public void setSf_LastTime(Date sf_LastTime) {
         this.sf_LastTime = sf_LastTime;
+    }
+
+    public String getSf_Point() {
+        return sf_Point;
+    }
+
+    public void setSf_Point(String sf_Point) {
+        this.sf_Point = sf_Point;
+    }
+
+    public String getSf_Description() {
+        return sf_Description;
+    }
+
+    public void setSf_Description(String sf_Description) {
+        this.sf_Description = sf_Description;
     }
 }
