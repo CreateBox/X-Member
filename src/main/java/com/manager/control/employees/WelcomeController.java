@@ -1,4 +1,4 @@
-package com.manager.control.users;
+package com.manager.control.employees;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

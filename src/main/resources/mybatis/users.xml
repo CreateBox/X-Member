@@ -5,7 +5,8 @@
     <resultMap id="EmployeesMap" type="Employees">
         <id column="e_id" property="e_Id"/>
         <association property="e_ModifyId" javaType="Employees">
-            <id column="e_id" property="e_Id"/>
+            <id column="e1_id" property="e_Id"/>
+            <result column="e1_realName" property="e_RealName"/>
         </association>
         <association property="e_Role" javaType="Role">
             <id column="r_id" property="r_Id"/>
@@ -14,7 +15,8 @@
             <id column="d_id" property="d_Id"/>
         </association>
         <association property="e_Superior" javaType="Employees">
-            <id column="e_id" property="e_Id"/>
+            <id column="e1_id" property="e_Id"/>
+            <result column="e1_realName" property="e_RealName"/>
         </association>
         <association property="e_Sex" javaType="Sex">
             <id column="sex_id" property="sex_Id"/>
@@ -25,11 +27,35 @@
     </resultMap>
 
     <select id="getEmployees" resultMap="EmployeesMap">
-        select e.*,d.*,r.*,s.*,st.* from employees e,dept d, role r,sex s,status st
+        select e.*,d.*,r.*,s.*,st.*,e1.e_realName e1_realName,e1.e_id e1_id from employees e,dept d, role r,sex s,status st,employees e1
         <trim prefix="where" prefixOverrides="and">
-            e.e_role = r.r_id and e.e_deptid = d.d_id and e.e_modifyId = e.e_id and e.e_sex = s.sex_id and e.e_status = st.st_id
+            e.e_role = r.r_id and e.e_deptid = d.d_id and e.e_modifyId = e1.e_id and e.e_sex = s.sex_id and e.e_status =
+            st.st_id
             <if test="e_LoginName != null and e_LoginName != ''">
-               and e_loginName = #{e_LoginName}
+                and e.e_loginName = #{e_LoginName}
+            </if>
+        </trim>
+    </select>
+
+    <select id="employeeList" resultMap="EmployeesMap">
+        select e.*,d.*,r.*,s.*,st.*,e1.e_realName e1_realName,e1.e_id e1_id from employees e,dept d, role r,sex s,status st,employees e1
+        <trim prefix="where" prefixOverrides="and">
+            e.e_role = r.r_id and e.e_deptid = d.d_id and e.e_modifyId = e1.e_id and e.e_sex = s.sex_id and e.e_status =
+            st.st_id
+            <if test="employee.e_RealName != null and employee.e_RealName != ''">
+                and e.e_RealName like concat('%',#{employee.e_RealName},'%')
+            </if>
+            limit #{begin},#{end}
+        </trim>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from employees e,dept d, role r,sex s,status st
+        <trim prefix="where" prefixOverrides="and">
+            e.e_role = r.r_id and e.e_deptid = d.d_id and e.e_modifyId = e.e_id and e.e_sex = s.sex_id and e.e_status =
+            st.st_id
+            <if test="e_RealName != null and e_RealName != ''">
+                and e.e_RealName like concat('%',#{e_RealName},'%')
             </if>
         </trim>
     </select>

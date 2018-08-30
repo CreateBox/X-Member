@@ -1,6 +1,8 @@
 package com.manager.pojo;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class Employees {
@@ -16,8 +18,10 @@ public class Employees {
     private Dept e_DeptId;
     private Employees e_Superior;
     private Status e_Status;
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date e_CreateTime;
     private Employees e_ModifyId;
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date e_ModifyTime;
     private String e_Description;
     private Date e_LastLoginTime;
