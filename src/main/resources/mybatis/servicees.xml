@@ -67,4 +67,8 @@
         WHERE type.`dd_typeCode`='service_type' AND status.`dd_typeCode`='service_status'
         AND s.s_id=#{id}
     </select>
+    <insert id="addSer">
+        INSERT INTO Servicees
+        VALUE(DEFAULT,#{ser.s_Name},#{ser.s_Type.dd_ValueId},#{ser.s_iPhone},1,DEFAULT,#{ser.s_Operator.e_Id},#{ser.s_Processor.e_Id},#{ser.s_info},#{ser.s_description})
+    </insert>
 </mapper>

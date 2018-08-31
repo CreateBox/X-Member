@@ -16,4 +16,7 @@ public interface ServiceesService {
     Integer updateSer(Servicees servicees);
 
     Integer updateSerCrl(Servicees servicees);
+
+    Integer addSer(Servicees servicees);
+
 }

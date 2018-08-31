@@ -169,4 +169,24 @@ public class ServiceesControl {
             return true;
         return false;
     }
+
+    @RequestMapping("/toAddser")
+    public ModelAndView toAddser() {
+        ModelAndView mv = new ModelAndView();
+        List<DataDictionary> service_type = dataDictionaryService.getservice_type("service_type");
+        mv.addObject("service_type", service_type);
+        mv.setViewName("addser");
+        return mv;
+    }
+
+    @RequestMapping("/addSer")
+    @ResponseBody
+    public Object addSer(Servicees servicees, HttpSession session) {
+        servicees.setS_Operator(SessionUtil.get(session));
+        servicees.setS_Processor(SessionUtil.get(session));
+        Integer integer = serviceesService.addSer(servicees);
+        if (1 == integer)
+            return true;
+        return false;
+    }
 }

@@ -20,6 +20,11 @@ public class ServiceesServiceImpl implements ServiceesService {
     }
 
     @Override
+    public Integer addSer(Servicees servicees) {
+        return serviceesMapper.addSer(servicees);
+    }
+
+    @Override
     public Servicees getSerById(Integer id) {
         return serviceesMapper.getSerById(id);
     }

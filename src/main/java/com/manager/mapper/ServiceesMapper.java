@@ -18,4 +18,6 @@ public interface ServiceesMapper {
     Integer updateSer(@Param("ser") Servicees servicees);
 
     Integer updateSerCrl(@Param("ser") Servicees servicees);
+
+    Integer addSer(@Param("ser") Servicees servicees);
 }
