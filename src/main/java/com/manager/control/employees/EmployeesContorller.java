@@ -1,15 +1,14 @@
 package com.manager.control.employees;
 
+import com.manager.pojo.Dept;
 import com.manager.pojo.Employees;
+import com.manager.service.dept.DeptService;
 import com.manager.service.users.EmployeesService;
 import com.manager.util.MD5Util;
 import com.manager.util.PageUtil;
 import com.manager.util.PwdUtil;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -23,6 +22,8 @@ import java.util.Map;
 public class EmployeesContorller {
     @Resource
     private EmployeesService employeesService;
+    @Resource
+    private DeptService deptService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
@@ -115,5 +116,21 @@ public class EmployeesContorller {
         pageUtil.setRecordsTotal(count);
         pageUtil.setRecordsFiltered(count);
         return pageUtil;
+    }
+
+    @RequestMapping("/getEmployee/{id}/{str}")
+    public ModelAndView getEmployee(@PathVariable Integer id,@PathVariable String str){
+        ModelAndView mv = new ModelAndView();
+        Employees employee = new Employees(id);
+        Employees newEmployee = employeesService.getEmployees(employee);
+        List<Dept> depts = deptService.deptAll();
+        mv.addObject("newEmployee",newEmployee);
+        mv.addObject("depts",depts);
+        if(str.equals("get")){
+            mv.setViewName("sysemployeeInfo");
+        }else{
+            mv.setViewName("sysemployeemodify");
+        }
+        return mv;
     }
 }

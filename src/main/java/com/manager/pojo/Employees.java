@@ -56,6 +56,8 @@ public class Employees {
         this.e_LoginName = loginName;
     }
 
+    public Employees(Integer id){this.e_Id = id;}
+
     public String getE_Code() {
         return e_Code;
     }

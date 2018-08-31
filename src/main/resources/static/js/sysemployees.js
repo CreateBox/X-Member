@@ -47,10 +47,10 @@ function x() {
             {
                 "data": "e_Id","width":"200px", "render": function (data, type, full, meta) {
                     return "<div class=\"layui-btn-group\">\n" +
-                        "    <a class=\"layui-btn layui-btn-sm\" onclick=\"x_admin_show(null,'/getRole/"+data+"/get',600,400)\">\n" +
+                        "    <a class=\"layui-btn layui-btn-sm\" onclick=\"x_admin_show(null,'/getEmployee/"+data+"/get',600,400)\">\n" +
                         "        <i class=\"layui-icon\">&#xe62a;</i>\n" +
                         "    </a>\n" +
-                        "    <a class=\"layui-btn layui-btn-sm\" onclick=\"x_admin_show(null,'/getRole/"+data+"/modify',600,450,true)\">\n" +
+                        "    <a class=\"layui-btn layui-btn-sm\" onclick=\"x_admin_show(null,'/getEmployee/"+data+"/modify',600,600,true)\">\n" +
                         "        <i class=\"layui-icon\">&#xe642;</i>\n" +
                         "    </a>\n" +
                         "    <a class=\"layui-btn layui-btn-sm\" onclick=\"x_admin_show(null,'/getRole/"+data+"/modify',600,450,true)\">\n" +

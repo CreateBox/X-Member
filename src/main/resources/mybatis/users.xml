@@ -26,6 +26,17 @@
         </association>
     </resultMap>
 
+    <select id="lowerList" resultMap="EmployeesMap">
+        select e.*,d.*,r.*,s.*,st.*,e1.e_realName e1_realName,e1.e_id e1_id from employees e,dept d, role r,sex s,status st,employees e1
+        <trim prefix="where" prefixOverrides="and">
+            e.e_role = r.r_id and e.e_deptid = d.d_id and e.e_modifyId = e1.e_id and e.e_sex = s.sex_id and e.e_status =
+            st.st_id
+            <if test="e_Id != null">
+                and e.e_Superior = #{e_Id}
+            </if>
+        </trim>
+    </select>
+
     <select id="getEmployees" resultMap="EmployeesMap">
         select e.*,d.*,r.*,s.*,st.*,e1.e_realName e1_realName,e1.e_id e1_id from employees e,dept d, role r,sex s,status st,employees e1
         <trim prefix="where" prefixOverrides="and">
@@ -33,6 +44,9 @@
             st.st_id
             <if test="e_LoginName != null and e_LoginName != ''">
                 and e.e_loginName = #{e_LoginName}
+            </if>
+            <if test="e_Id != null">
+                and e.e_id = #{e_Id}
             </if>
         </trim>
     </select>

@@ -13,4 +13,6 @@ public interface EmployeesMapper {
     List<Employees> employeeList(Map map);
 
     int count(Employees employees);
+
+    List<Employees> lowerList(Employees employees);
 }
