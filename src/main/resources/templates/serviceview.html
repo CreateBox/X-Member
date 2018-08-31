@@ -190,7 +190,7 @@
         layer.confirm("确认提交服务名称:" + name, {icon: 3, title: '提示'}, function () {
             $.ajax({
                 type: "POST",
-                url: "/subSer",
+                url: "/crlSer/0",
                 data: {s_Id: id},
                 dataType: "JSON",
                 success: function (data) {
@@ -204,6 +204,8 @@
             })
         });
     }
+
+
 
     function delSer(id, name) {
         layer.confirm("确认删除服务名称:" + name, {icon: 3, title: '提示'}, function () {

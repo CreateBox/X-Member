@@ -9,7 +9,10 @@ public interface EmployeesService {
 
     int alterEmployees(Employees employees);
 
-    List<Employees> employeeList(Integer begin,Integer end,Employees employees);
+    List<Employees> employeeList(Integer begin, Integer end, Employees employees);
 
     int count(Employees employees);
+
+    List<Employees> lowerList(Employees employees);
+
 }

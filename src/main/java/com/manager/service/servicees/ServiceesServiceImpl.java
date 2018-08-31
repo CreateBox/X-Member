@@ -20,13 +20,13 @@ public class ServiceesServiceImpl implements ServiceesService {
     }
 
     @Override
-    public Integer updateSerSub(Integer id) {
-        return serviceesMapper.updateSerSub(id);
+    public Servicees getSerById(Integer id) {
+        return serviceesMapper.getSerById(id);
     }
 
     @Override
-    public Servicees getSerById(Integer id) {
-        return serviceesMapper.getSerById(id);
+    public Integer updateSerCrl(Servicees servicees) {
+        return serviceesMapper.updateSerCrl(servicees);
     }
 
     @Override

@@ -11,9 +11,9 @@ public interface ServiceesService {
 
     Integer delSer(Integer id);
 
-    Integer updateSerSub(Integer id);
-
     Servicees getSerById(Integer id);
 
     Integer updateSer(Servicees servicees);
+
+    Integer updateSerCrl(Servicees servicees);
 }

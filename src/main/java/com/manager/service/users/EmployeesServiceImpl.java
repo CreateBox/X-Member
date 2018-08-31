@@ -23,17 +23,22 @@ public class EmployeesServiceImpl implements EmployeesService {
     }
 
     @Override
+    public List<Employees> lowerList(Employees employees) {
+        return employeesMapper.lowerList(employees);
+    }
+
+    @Override
     @Transactional
     public int alterEmployees(Employees employees) {
         return employeesMapper.alterEmployees(employees);
     }
 
     @Override
-    public List<Employees> employeeList(Integer begin,Integer end,Employees employees) {
-        Map<String,Object> map = new HashMap<>();
-        map.put("begin",begin);
-        map.put("end",end);
-        map.put("employee",employees);
+    public List<Employees> employeeList(Integer begin, Integer end, Employees employees) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("begin", begin);
+        map.put("end", end);
+        map.put("employee", employees);
         return employeesMapper.employeeList(map);
     }
 

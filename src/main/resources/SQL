@@ -159,6 +159,31 @@ INSERT INTO Servicees VALUE(DEFAULT,'四川客户离心器售后服务',1,'13632
 INSERT INTO Servicees VALUE(DEFAULT,'北京客户明洞设备安装服务',3,'13632603933',4,DEFAULT,1,1,NULL,NULL);
 INSERT INTO Servicees VALUE(DEFAULT,'四川客户离心器售后服务',2,'13632603933',4,DEFAULT,1,1,NULL,NULL);
 
+
+DROP TABLE IF EXISTS ServiceProcess;
+CREATE TABLE ServiceProcess
+(
+	sp_id INT PRIMARY KEY AUTO_INCREMENT COMMENT '服务问题ID',
+	sp_ser INT NOT NULL COMMENT '服务外键',
+	sp_lastTime DATETIME DEFAULT NOW() COMMENT '最后操作时间',
+	sp_operator INT NOT NULL COMMENT '操作员',
+	sp_info VARCHAR(255) NOT NULL COMMENT '服务说明'
+);
+
+INSERT INTO ServiceProcess VALUE(DEFAULT,1,DEFAULT,1,'已联系售后人员准备上门安装，去之前会再次联系客户。');
+
+DROP TABLE IF EXISTS ServiceBack;
+CREATE TABLE ServiceBack
+(
+	sb_id INT PRIMARY KEY AUTO_INCREMENT COMMENT '服务反馈ID',
+	sb_ser INT NOT NULL COMMENT '服务外键',
+	sb_lastTime DATETIME DEFAULT NOW() COMMENT '最后操作时间',
+	sb_operator INT NOT NULL COMMENT '操作员',
+	sb_info VARCHAR(255) NOT NULL COMMENT '反馈说明'
+);
+
+INSERT INTO ServiceBack VALUE(DEFAULT,1,DEFAULT,1,'已向客户反馈。');
+
 DROP TABLE IF EXISTS service_FAQ;
 CREATE TABLE service_FAQ
 (

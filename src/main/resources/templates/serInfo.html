@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:HH="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>欢迎页面-X-admin2.0</title>
@@ -45,6 +45,22 @@
                 <tr>
                     <td>备注信息</td>
                     <td th:text="${info.getS_description()}"></td>
+                </tr>
+                <tr th:if="${null != serPro and 0 != serPro.size()}">
+                    <td>处理说明</td>
+                    <td></td>
+                </tr>
+                <tr th:each="pro:${serPro}">
+                    <td th:text="${#dates.format(pro.getSp_LastTime(),'yyyy-MM-dd HH:mm')}"></td>
+                    <td th:text="${pro.getSp_Info()}"></td>
+                </tr>
+                <tr th:if="${null != serBack and 0 != serBack.size()}">
+                    <td>反馈结果</td>
+                    <td></td>
+                </tr>
+                <tr th:each="back:${serBack}">
+                    <td th:text="${#dates.format(back.getSb_LastTime(),'yyyy-MM-dd HH:mm')}"></td>
+                    <td th:text="${back.getSb_Info()}"></td>
                 </tr>
             </table>
         </div>

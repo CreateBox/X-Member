@@ -13,9 +13,9 @@ public interface ServiceesMapper {
 
     Integer delSer(@Param("id") Integer id);
 
-    Integer updateSerSub(@Param("id") Integer id);
-
     Servicees getSerById(@Param("id") Integer id);
 
-    Integer updateSer(Servicees servicees);
+    Integer updateSer(@Param("ser") Servicees servicees);
+
+    Integer updateSerCrl(@Param("ser") Servicees servicees);
 }

@@ -1,13 +1,15 @@
 package com.manager.control.servicees;
 
-import com.manager.pojo.DataDictionary;
-import com.manager.pojo.Employees;
-import com.manager.pojo.Servicees;
+import com.manager.pojo.*;
 import com.manager.service.datadictionary.DataDictionaryService;
+import com.manager.service.serviceback.ServicebackService;
 import com.manager.service.servicees.ServiceesService;
+import com.manager.service.serviceprocess.ServiceprocessService;
+import com.manager.service.users.EmployeesService;
 import com.manager.util.PageUtil;
 import com.manager.util.SessionUtil;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,14 +27,20 @@ public class ServiceesControl {
     private ServiceesService serviceesService;
     @Resource
     private DataDictionaryService dataDictionaryService;
+    @Resource
+    private ServiceprocessService serviceprocessService;
+    @Resource
+    private ServicebackService servicebackService;
+    @Resource
+    private EmployeesService employeesService;
 
-    @RequestMapping("serviceview.html")
-    public String serviceesVist(Model model) {
+    @RequestMapping("ser{name}view.html")
+    public String serviceesVist(@PathVariable("name") String name, Model model) {
         List<DataDictionary> service_type = dataDictionaryService.getservice_type("service_type");
         List<DataDictionary> service_status = dataDictionaryService.getservice_type("service_status");
         model.addAttribute("s_type", service_type);
         model.addAttribute("s_status", service_status);
-        return "serviceview";
+        return "ser" + name + "view";
     }
 
     @RequestMapping("serviceesList.json")
@@ -64,15 +72,66 @@ public class ServiceesControl {
             return false;
     }
 
-    @RequestMapping("/subSer")
+    @RequestMapping("/ser{name}/{id}")
+    public ModelAndView sername(@PathVariable("name") String name, @PathVariable("id") Integer id, HttpSession session) {
+        ModelAndView mv = new ModelAndView();
+        Servicees serById = serviceesService.getSerById(id);
+        List<Employees> employees = employeesService.lowerList(SessionUtil.get(session));
+        mv.addObject("info", serById);
+        mv.addObject("employees", employees);
+        mv.setViewName("ser" + name);
+        return mv;
+    }
+
+    @RequestMapping("/crlSer/{value}")
     @ResponseBody
-    public Object subSer(Integer s_Id) {
-        Integer integer = serviceesService.updateSerSub(s_Id);
+    @Transactional
+    public Object crlSer(@PathVariable("value") Integer value, Integer s_Id, Integer emp, HttpSession session, String info) {
+        DataDictionary dataDictionary = new DataDictionary();
+        Employees employees = new Employees();
+        Servicees servicees = new Servicees();
+        servicees.setS_Id(s_Id);
+        servicees.setS_Operator(SessionUtil.get(session));
+        if (0 == value) {//提交  打回
+            dataDictionary.setDd_ValueId(2);
+            servicees.setS_Status(dataDictionary);
+            servicees.setS_Processor(SessionUtil.get(session).getE_Superior());
+        } else if (1 == value) {//分配
+            dataDictionary.setDd_ValueId(3);
+            servicees.setS_Status(dataDictionary);
+            employees.setE_Id(emp);
+            servicees.setS_Processor(employees);
+        } else if (2 == value) {//处理
+            dataDictionary.setDd_ValueId(4);
+            servicees.setS_Status(dataDictionary);
+            servicees.setS_Processor(SessionUtil.get(session));
+            Serviceprocess serviceprocess = new Serviceprocess();
+            serviceprocess.setSp_Ser(servicees.getS_Id());
+            serviceprocess.setSp_Operator(SessionUtil.get(session).getE_Id());
+            serviceprocess.setSp_Info(info);
+            if (0 == serviceprocessService.addSerPro(serviceprocess))
+                return false;
+        } else if (3 == value) {//反馈
+            dataDictionary.setDd_ValueId(5);
+            servicees.setS_Status(dataDictionary);
+            servicees.setS_Processor(SessionUtil.get(session));
+            Serviceback serviceback = new Serviceback();
+            serviceback.setSb_Ser(servicees.getS_Id());
+            serviceback.setSb_Operator(SessionUtil.get(session).getE_Id());
+            serviceback.setSb_Info(info);
+            if (0 == servicebackService.addSerBack(serviceback))
+                return false;
+        } else if (4 == value) {
+            dataDictionary.setDd_ValueId(5);
+            servicees.setS_Status(dataDictionary);
+        }
+        Integer integer = serviceesService.updateSerCrl(servicees);
         if (1 == integer)
             return true;
         else
             return false;
     }
+
 
     @RequestMapping("/getSer/{id}/{str}")
     public ModelAndView getSer(@PathVariable("id") Integer id, @PathVariable("str") String str) {
@@ -86,6 +145,19 @@ public class ServiceesControl {
             mv.addObject("service_type", service_type);
             mv.setViewName("sermodify");
         }
+        return mv;
+    }
+
+    @RequestMapping("/getSerPro/{id}/{str}")
+    public ModelAndView getSerPro(@PathVariable("id") Integer id, @PathVariable("str") String str) {
+        ModelAndView mv = getSer(id, str);
+
+        List<Serviceprocess> serPro = serviceprocessService.getSerPro(id);
+        mv.addObject("serPro", serPro);
+
+        List<Serviceback> serBack = servicebackService.getSerBack(id);
+        mv.addObject("serBack", serBack);
+
         return mv;
     }
 

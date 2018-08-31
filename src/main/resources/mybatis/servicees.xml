@@ -27,6 +27,8 @@
     </select>
     <select id="getServiceesCount" resultType="_int">
         SELECT COUNT(*) FROM servicees s
+        INNER JOIN employees op ON op.`e_id`=s.`s_operator`
+        INNER JOIN employees pro ON pro.`e_id`=s.`s_processor`
         <where>
             AND (s.`s_operator` = #{ser.s_Operator.e_Id} OR s.`s_processor` = #{ser.s_Processor.e_Id})
             AND s.`s_name` LIKE CONCAT('%',#{ser.s_Name},'%')
@@ -46,8 +48,14 @@
     </update>
     <update id="updateSer">
         UPDATE servicees s
-        SET s.`s_info`=#{s_info},s.`s_description`=#{s_description},s.`s_iPhone`=#{s_iPhone},s.`s_type` = #{s_Type.dd_ValueId} , s_lastTime = DEFAULT
-        WHERE s_id = #{s_Id} AND s_status=1
+        SET s.`s_info`=#{ser.s_info},s.`s_description`=#{ser.s_description},s.`s_iPhone`=#{ser.s_iPhone},s.`s_type` = #{ser.s_Type.dd_ValueId} , s_lastTime = DEFAULT
+        WHERE s_id = #{ser.s_Id}
+    </update>
+    <update id="updateSerCrl">
+        UPDATE servicees
+        set s_status=#{ser.s_Status.dd_ValueId},s_lastTime=default ,
+        s_operator=#{ser.s_Operator.e_Id},s_processor=#{ser.s_Processor.e_Id}
+        WHERE s_id = #{ser.s_Id}
     </update>
     <select id="getSerById" resultType="Servicees">
         SELECT s.*,type.`dd_valueId` `s_Type.dd_ValueId`,type.`dd_valueName` `s_Type.dd_ValueName`,status.`dd_valueId` `s_status.dd_ValueId`,status.`dd_valueName` `s_status.dd_ValueName`,op.`e_realName` `s_operator.e_RealName`,pro.`e_realName` `s_processor.e_RealName`
