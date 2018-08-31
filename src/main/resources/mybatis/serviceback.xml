@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace mapper接口 必填 随便填值 防止SQL语句ID重名-->
+<mapper namespace="com.manager.mapper.ServicebackMapper">
+    <select id="getSerBack" resultType="Serviceback">
+        SELECT * FROM ServiceBack WHERE sb_ser=#{sb_ser}
+    </select>
+    <insert id="addSerBack">
+        INSERT INTO ServiceBack
+        VALUE(DEFAULT,#{sback.sb_Ser},DEFAULT,#{sback.sb_Operator},#{sback.sb_Info})
+    </insert>
+</mapper>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace mapper接口 必填 随便填值 防止SQL语句ID重名-->
+<mapper namespace="com.manager.mapper.ServiceprocessMapper">
+    <select id="getSerPro" resultType="Serviceprocess">
+        SELECT * FROM ServiceProcess WHERE sp_ser=#{sp_ser}
+    </select>
+    <insert id="addSerPro">
+        INSERT INTO ServiceProcess
+        VALUE(DEFAULT,#{spro.sp_Ser},DEFAULT,#{spro.sp_Operator},#{spro.sp_Info})
+    </insert>
+</mapper>
