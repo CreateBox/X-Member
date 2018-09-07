@@ -143,7 +143,6 @@ CREATE TABLE Servicees
 	s_processor INT DEFAULT NULL COMMENT '待处理人',
 	s_info VARCHAR(255) COMMENT '服务内容',
 	s_description VARCHAR(255) COMMENT '备注信息'
-
 );
 
 INSERT INTO Servicees VALUE(DEFAULT,'四川客户离心器售后服务',2,'13632603933',4,DEFAULT,1,1,'服务内容','备注信息');
@@ -219,17 +218,16 @@ CREATE TABLE customer
 	c_sex INT NOT NULL COMMENT '客户性别',
 	c_type INT NOT NULL COMMENT '客户类型',
 	c_status INT NOT NULL COMMENT '客户状态',
-	c_allot INT NOT NULL COMMENT '分配状态',
 	c_entertime DATETIME DEFAULT NOW() COMMENT '录入时间',
-	c_enteremp DECIMAL(7,2) DEFAULT 0 COMMENT '录入人',
-	c_service INT NOT NULL COMMENT '服务外键'
+	c_enteremp INT NOT NULL COMMENT '录入人',
+	c_service INT COMMENT '服务外键'
 );
 
-INSERT INTO customer VALUE(DEFAULT,'廖昌勇',1,4,3,1,DEFAULT,1,1);
-INSERT INTO customer VALUE(DEFAULT,'王翔宇',1,4,2,2,DEFAULT,1,1);
-INSERT INTO customer VALUE(DEFAULT,'Harry·Shaw',1,1,1,1,DEFAULT,1,1);
-INSERT INTO customer VALUE(DEFAULT,'曾未来',1,2,3,1,DEFAULT,1,1);
-INSERT INTO customer VALUE(DEFAULT,'青松',0,3,2,2,DEFAULT,1,1);
+INSERT INTO customer VALUE(DEFAULT,'廖昌勇',1,4,3,DEFAULT,1,NULL);
+INSERT INTO customer VALUE(DEFAULT,'王翔宇',1,4,2,DEFAULT,1,1);
+INSERT INTO customer VALUE(DEFAULT,'Harry·Shaw',1,1,1,DEFAULT,1,NULL);
+INSERT INTO customer VALUE(DEFAULT,'曾未来',1,2,3,DEFAULT,1,1);
+INSERT INTO customer VALUE(DEFAULT,'青松',2,3,2,DEFAULT,1,1);
 
 DROP TABLE IF EXISTS orders;
 CREATE TABLE orders

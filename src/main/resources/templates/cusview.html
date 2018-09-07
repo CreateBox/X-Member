@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎页面-X-admin2.0</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="/static/css/font.css">
+    <link rel="stylesheet" href="/static/css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/js/xadmin.js"></script>
+    <!-- Bootstrap -->
+    <link href="/static/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Datatables -->
+    <link href="/static/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="/static/build/css/custom.min.css" rel="stylesheet">
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="layui-anim layui-anim-up">
+<div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a><cite>客户管理</cite></a>
+        <a><cite>客户资源管理</cite></a>
+      </span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
+       href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+</div>
+<div class="x-body">
+    <div class="layui-row">
+        <form class="layui-form layui-col-md12 x-so">
+            <label class="layui-form-label layui-input-inline"></label>
+            <input class="layui-input layui-input-inline" placeholder="客户名字" id="c_Name"/>
+            <div class="layui-input-inline">
+                <select id="status">
+                    <option value="">分配状态</option>
+                    <option value="0">未分配</option>
+                    <option value="1">已分配</option>
+                </select>
+            </div>
+            <button class="layui-btn data-table" type="button" lay-filter="sreach"><i class="layui-icon">&#xe615;</i>
+            </button>
+        </form>
+    </div>
+    <!-- page content -->
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <form>
+                <div class="x_content">
+                    <table id="datatable" class="table table-striped table-bordered">
+                    </table>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- /page content -->
+
+</div>
+<!-- jQuery -->
+<script src="/static/vendors/jquery/dist/jquery.min.js"></script>
+<!-- Datatables -->
+<script src="/static/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="/static/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- Datatables -->
+<script>
+    $(document).ready(function () {
+        f();
+    });
+
+    function f() {
+        $('#datatable').dataTable({
+            "ordering": false,
+            "searching": false,
+            "serverSide": true,//是否启用服务器处理数据源
+            "bStateSave": false,//不缓存数据
+            "language": {
+                "lengthMenu": "每页 _MENU_ 条记录",
+                "zeroRecords": "没有找到记录",
+                "info": "第 _PAGE_ 页 ( 总共 _PAGES_ 页 )",
+                "infoEmpty": "无记录",
+                "infoFiltered": "(从 _MAX_ 条记录过滤)",
+                "paginate": {
+                    "previous": "上一页",
+                    "next": "下一页",
+                    "processing": "正在处理中...."
+                }
+            },
+            "columnDefs": [
+                {"title": "客户ID", "targets": 0},
+                {"title": "客户姓名", "targets": 1},
+                {"title": "性别", "targets": 2},
+                {"title": "类型", "targets": 3},
+                {"title": "状态", "targets": 4},
+                {"title": "分配状态", "targets": 5},
+                {"title": "录入时间", "targets": 6},
+                {"title": "录入人", "targets": 7},
+                {"title": "操作", "targets": 8}
+            ],
+            "ajax": {
+                "url": "/cusview.json",
+                "type": "POST",
+                "dataType": "json",
+                data: function (data) {
+                    var param = {
+                        "c_Name": $("#c_Name").val(),
+                        "status": $("#status").val()
+                    };
+                    param.length = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
+                    param.start = data.start;//开始的记录序号
+                    param.draw = data.draw;
+                    return param;
+                }
+            },
+            "columns": [
+                {"data": "c_Id"},
+                {"data": "c_Name"},
+                {
+                    "data": "c_Sex", "render": function (data) {
+                        return data.sex_Name;
+                    }
+                },
+                {
+                    "data": "c_Type", "render": function (data) {
+                        return data.dd_ValueName;
+                    }
+                },
+                {
+                    "data": "c_Status", "render": function (data) {
+                        return data.dd_ValueName;
+                    }
+                },
+                {
+                    "data": "c_Service", "render": function (data) {
+                        return data == null ? "未分配" : "已分配";
+                    }
+                },
+                {"data": "c_Entertime"},
+                {
+                    "data": "c_Enteremp", "render": function (data) {
+                        return data.e_RealName;
+                    }
+                },
+                {
+                    "data": "c_Id", "width": "160px", "render": function (data, type, full, meta) {
+                        var btn = "<div class=\"layui-btn-group\">\n" +
+                            "    <a class=\"layui-btn layui-btn-sm\" title='查看' onclick=\"x_admin_show(null,'/getCus/" + data + "/get',600,400)\">\n" +
+                            "        <i class=\"layui-icon\">&#xe62a;</i>\n" +
+                            "    </a>\n";
+                        btn = btn + "    <a class=\"layui-btn layui-btn-sm\" title='修改/分配' onclick=\"x_admin_show(null,'/getCus/" + data + "/modify',600,500,true)\">\n" +
+                            "        <i class=\"layui-icon\">&#xe642;</i>\n" +
+                            "    </a>\n";
+                        btn = btn + "</div>";
+                        return btn;
+                    }
+                }
+            ]
+        });
+
+        $(".data-table").on("click", function () {
+            $('#datatable').DataTable().ajax.reload();
+        });
+    }
+
+</script>
+<!-- /Datatables -->
+</body>
+
+</html>

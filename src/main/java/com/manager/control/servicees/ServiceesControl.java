@@ -1,6 +1,7 @@
 package com.manager.control.servicees;
 
 import com.manager.pojo.*;
+import com.manager.service.customer.CustomerService;
 import com.manager.service.datadictionary.DataDictionaryService;
 import com.manager.service.serviceback.ServicebackService;
 import com.manager.service.servicees.ServiceesService;
@@ -33,6 +34,8 @@ public class ServiceesControl {
     private ServicebackService servicebackService;
     @Resource
     private EmployeesService employeesService;
+    @Resource
+    private CustomerService customerService;
 
     @RequestMapping("ser{name}view.html")
     public String serviceesVist(@PathVariable("name") String name, Model model) {
@@ -93,6 +96,9 @@ public class ServiceesControl {
         servicees.setS_Id(s_Id);
         servicees.setS_Operator(SessionUtil.get(session));
         if (0 == value) {//提交  打回
+            Integer integer = customerService.getcountSer(servicees.getS_Id());
+            if (0 == integer)
+                return false;
             dataDictionary.setDd_ValueId(2);
             servicees.setS_Status(dataDictionary);
             servicees.setS_Processor(SessionUtil.get(session).getE_Superior());

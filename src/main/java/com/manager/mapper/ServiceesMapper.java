@@ -20,4 +20,6 @@ public interface ServiceesMapper {
     Integer updateSerCrl(@Param("ser") Servicees servicees);
 
     Integer addSer(@Param("ser") Servicees servicees);
+
+    List<Servicees> getSerNotCus();
 }

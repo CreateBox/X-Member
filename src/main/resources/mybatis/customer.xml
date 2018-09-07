@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace mapper接口 必填 随便填值 防止SQL语句ID重名-->
+<mapper namespace="com.manager.mapper.CustomerMapper">
+    <select id="getCus" resultType="Customer">
+        SELECT e.`e_realName` `c_Enteremp.e_RealName`,se.`sex_id` `c_Sex.sex_Id`,se.`sex_name` `c_Sex.sex_Name`,
+        st.`dd_valueId` `c_Status.dd_ValueId`,st.`dd_valueName` `c_Status.dd_ValueName`,
+        tp.`dd_valueId` `c_Type.dd_ValueId`,tp.`dd_valueName` `c_Type.dd_ValueName`,
+        c.*
+        FROM customer c
+        INNER JOIN sex se ON c.`c_sex`=se.`sex_id`
+        INNER JOIN employees e ON c.`c_enteremp`=e.`e_id`
+        INNER JOIN data_dictionary tp ON tp.`dd_valueId` = c.`c_type`
+        INNER JOIN data_dictionary st ON st.`dd_valueId` = c.`c_status`
+        WHERE tp.`dd_typeCode`='customer_type'
+        AND st.`dd_typeCode`='customer_status'
+        <if test="null!=cus.c_Name">
+            AND c.`c_name` LIKE CONCAT('%',#{cus.c_Name},'%')
+        </if>
+        <if test="0==ser">
+            AND c.`c_service` IS NULL
+        </if>
+        <if test="1==ser">
+            AND c.`c_service` IS not NULL
+        </if>
+        ORDER BY c.`c_id`
+        LIMIT #{start},#{length}
+    </select>
+    <select id="getCusCount" resultType="_int">
+        SELECT count(1)
+        FROM customer c
+        INNER JOIN sex se ON c.`c_sex`=se.`sex_id`
+        INNER JOIN employees e ON c.`c_enteremp`=e.`e_id`
+        INNER JOIN data_dictionary tp ON tp.`dd_valueId` = c.`c_type`
+        INNER JOIN data_dictionary st ON st.`dd_valueId` = c.`c_status`
+        WHERE tp.`dd_typeCode`='customer_type'
+        AND st.`dd_typeCode`='customer_status'
+        AND c.`c_name` LIKE CONCAT('%',#{cus.c_Name},'%')
+        <if test="0==ser">
+            AND c.`c_service` IS NULL
+        </if>
+        <if test="1==ser">
+            AND c.`c_service` IS not NULL
+        </if>
+    </select>
+    <update id="updateSer">
+        UPDATE customer c SET c.`c_service`=#{cus.c_Service} WHERE c.`c_id`=#{cus.c_Id}
+    </update>
+    <select id="getCusById" resultType="Customer">
+        SELECT e.`e_realName` `c_Enteremp.e_RealName`,se.`sex_id` `c_Sex.sex_Id`,se.`sex_name` `c_Sex.sex_Name`,
+        st.`dd_valueId` `c_Status.dd_ValueId`,st.`dd_valueName` `c_Status.dd_ValueName`,
+        tp.`dd_valueId` `c_Type.dd_ValueId`,tp.`dd_valueName` `c_Type.dd_ValueName`,
+        c.*
+        FROM customer c
+        INNER JOIN sex se ON c.`c_sex`=se.`sex_id`
+        INNER JOIN employees e ON c.`c_enteremp`=e.`e_id`
+        INNER JOIN data_dictionary tp ON tp.`dd_valueId` = c.`c_type`
+        INNER JOIN data_dictionary st ON st.`dd_valueId` = c.`c_status`
+        WHERE tp.`dd_typeCode`='customer_type'
+        AND st.`dd_typeCode`='customer_status'
+        and c.c_id=#{id}
+    </select>
+    <update id="updateCus">
+        UPDATE customer c
+        <set>
+            c.`c_type`=#{cus.c_Type.dd_ValueId} ,c.`c_status`=#{cus.c_Status.dd_ValueId} ,
+            <if test="cus.c_Service!=null">
+                c.`c_service`=#{cus.c_Service}
+            </if>
+        </set>
+        WHERE c.`c_id`=#{cus.c_Id}
+    </update>
+    <select id="getcountSer" resultType="_int">
+        SELECT COUNT(1) FROM customer c WHERE c.`c_service`= #{s_id}
+    </select>
+</mapper>

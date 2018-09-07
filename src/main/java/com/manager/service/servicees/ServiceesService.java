@@ -19,4 +19,7 @@ public interface ServiceesService {
 
     Integer addSer(Servicees servicees);
 
+    List<Servicees> getSerNotCus();
+
+
 }

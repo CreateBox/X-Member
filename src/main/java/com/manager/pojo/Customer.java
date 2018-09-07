@@ -9,14 +9,13 @@ public class Customer {
 
     private Integer c_Id;
     private String c_Name;
-    private DataDictionary c_Sex;
+    private Sex c_Sex;
     private DataDictionary c_Type;
     private DataDictionary c_Status;
-    private DataDictionary c_Allot;
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date c_Entertime;
-    private Double c_Enteremp;
-    private Servicees c_Service;
+    private Employees c_Enteremp;
+    private Integer c_Service;
 
     public Integer getC_Id() {
         return c_Id;
@@ -34,11 +33,11 @@ public class Customer {
         this.c_Name = c_Name;
     }
 
-    public DataDictionary getC_Sex() {
+    public Sex getC_Sex() {
         return c_Sex;
     }
 
-    public void setC_Sex(DataDictionary c_Sex) {
+    public void setC_Sex(Sex c_Sex) {
         this.c_Sex = c_Sex;
     }
 
@@ -58,14 +57,6 @@ public class Customer {
         this.c_Status = c_Status;
     }
 
-    public DataDictionary getC_Allot() {
-        return c_Allot;
-    }
-
-    public void setC_Allot(DataDictionary c_Allot) {
-        this.c_Allot = c_Allot;
-    }
-
     public Date getC_Entertime() {
         return c_Entertime;
     }
@@ -74,19 +65,19 @@ public class Customer {
         this.c_Entertime = c_Entertime;
     }
 
-    public Double getC_Enteremp() {
+    public Employees getC_Enteremp() {
         return c_Enteremp;
     }
 
-    public void setC_Enteremp(Double c_Enteremp) {
+    public void setC_Enteremp(Employees c_Enteremp) {
         this.c_Enteremp = c_Enteremp;
     }
 
-    public Servicees getC_Service() {
+    public Integer getC_Service() {
         return c_Service;
     }
 
-    public void setC_Service(Servicees c_Service) {
+    public void setC_Service(Integer c_Service) {
         this.c_Service = c_Service;
     }
 }

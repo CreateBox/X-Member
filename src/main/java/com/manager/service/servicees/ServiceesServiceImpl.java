@@ -25,6 +25,11 @@ public class ServiceesServiceImpl implements ServiceesService {
     }
 
     @Override
+    public List<Servicees> getSerNotCus() {
+        return serviceesMapper.getSerNotCus();
+    }
+
+    @Override
     public Servicees getSerById(Integer id) {
         return serviceesMapper.getSerById(id);
     }
