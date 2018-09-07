@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace mapper接口 必填 随便填值 防止SQL语句ID重名-->
+<mapper namespace="com.manager.mapper.AnnouncementMapper">
+    <select id="announcementlist" resultType="Announcement">
+        SELECT * FROM announcement
+        where t_Title like concat('%',#{t_title},'%')
+        LIMIT #{start},#{length}
+    </select>
+    <select id="announcementselect" resultType="Announcement">
+      SELECT * FROM announcement
+        WHERE t_Title =#{t_Title}
+    </select>
+    <select id="getAnnCount" resultType="_int">
+        SELECT count(*) FROM announcement
+        where t_Title like concat('%',#{t_title},'%')
+    </select>
+
+    <insert id="addAnnouncement">
+        INSERT INTO announcement
+        (t_id,t_title,t_type,t_name,t_content,t_date) value
+        (default,#{t_id},#{t_tible},#{t_type},#{t_name},#{t_content},#{t_date});
+    </insert>
+
+    <delete id="delAnnouncement" >
+    DELETE	FROM announcement WHERE t_id=#{t_id}
+</delete>
+</mapper>

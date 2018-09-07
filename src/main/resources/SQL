@@ -240,3 +240,19 @@ CREATE TABLE orders
 	o_time DATETIME DEFAULT NOW() COMMENT '下单时间',
 	o_status INT NOT NULL COMMENT '订单状态'
 );
+
+DROP TABLE IF EXISTS  announcement;
+CREATE TABLE announcement
+(
+	t_id INT PRIMARY KEY AUTO_INCREMENT COMMENT '公告ID',
+	t_title VARCHAR(50) NOT NULL COMMENT '公告标题',
+	t_type INT NOT NULL COMMENT '公告类型',
+	t_name INT NOT NULL COMMENT '发布人',
+	t_content VARCHAR(5000) NOT NULL COMMENT '公告内容',
+	t_date DATETIME DEFAULT NOW() COMMENT '发布时间'
+);
+
+INSERT INTO announcement VALUE(DEFAULT,'2015年公司月会安排',2,1,'公司定于2013年12月20日举行公司年会，请......',NOW());
+INSERT INTO announcement VALUE(DEFAULT,'2014年公司年会安排',1,1,'公司定于2013年12月20日举行公司年会，请......',NOW());
+INSERT INTO announcement VALUE(DEFAULT,'2014年公司年会安排',1,1,'公司定于2013年12月20日举行公司年会，请......',NOW());
+INSERT INTO announcement VALUE(DEFAULT,'2014年公司年会安排',1,1,'公司定于2013年12月20日举行公司年会，请......',NOW());
