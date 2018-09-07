@@ -3,9 +3,17 @@
 Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 -->
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="/static/css/font.css">
+    <link rel="stylesheet" href="/static/css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/js/xadmin.js"></script>
+    <!-- Bootstrap -->
+    <link href="/static/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <script src="/static/ckeditor/ckeditor.js"></script>
     <script src="/static/ckeditor/samples/js/sample.js"></script>
@@ -15,11 +23,12 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 <body id="main">
 <main>
     <div class="grid-width-100">
-        <div id="editor">
-          <h1></h1>
-            <p id="neirong">I'm an instance of <a href="https://ckeditor.com">CKEditor</a>.</p>
+        <input type="hidden" th:value="${out_trade_no}" name="divcontent" id="divcontent">
+        <input class="layui-input layui-input-inline" placeholder="公告标题" style="margin-top: 25px" id="t_Title"/>
+
+        <div id="editor" name="t_Content">
         </div>
-        <input type="button" value="提交">
+        <input class="layui-btn layui-bg-blue" type="button" onclick="f()" value="发布">
     </div>
 
 </main>
@@ -29,6 +38,31 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 
 </body>
 <script>
+    function f() {
+        var divcontent = $("#divcontent").val();
+        var t_Title = $("#t_Title").val();
+        var t_Content = CKEDITOR.instances.editor.getData()
 
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//提交类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/announcementAdd",//url
+            data: {t_Title: t_Title, t_Content: t_Content, t_no: divcontent},//序列化表单信息
+            success: function (data) {
+                console.log(data);//打印服务端返回的数据(调试用)
+                if (data == true) {
+                    layer.msg("发布成功!");
+                } else {
+                    layer.msg("发布失败!");
+                }
+                setTimeout(function () {
+                    window.location.href = "/getAnnNo/" + divcontent;
+                }, 3000);
+
+            }
+        });
+        return false;
+    }
 </script>
 </html>

@@ -7,12 +7,16 @@ import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.*;
 import com.manager.config.AlipayConfig;
+import com.manager.util.SessionUtil;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -25,7 +29,7 @@ public class AlipayControl {
     }
 
     @RequestMapping("/alipay.trade.page.pay.jsp")
-    public String pay(HttpServletRequest request, HttpServletResponse response) {
+    public String pay(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         //获得初始化的AlipayClient
         AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id, AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key, AlipayConfig.sign_type);
 
@@ -35,13 +39,26 @@ public class AlipayControl {
         alipayRequest.setNotifyUrl(AlipayConfig.notify_url);
 
         //商户订单号，商户网站订单系统中唯一订单号，必填
-        String out_trade_no = request.getParameter("WIDout_trade_no");
+//        String out_trade_no = request.getParameter("WIDout_trade_no");
+        Date vNow = new Date();
+        String out_trade_no = "";
+        out_trade_no += String.valueOf(vNow.getYear());
+        out_trade_no += String.valueOf(vNow.getMonth() + 1);
+        out_trade_no += String.valueOf(vNow.getDate());
+        out_trade_no += String.valueOf(vNow.getHours());
+        out_trade_no += String.valueOf(vNow.getMinutes());
+        out_trade_no += String.valueOf(vNow.getSeconds());
+        out_trade_no += String.valueOf(vNow.getTime());
+//        String out_trade_no = request.getParameter("WIDTCout_trade_no");
         //付款金额，必填
-        String total_amount = request.getParameter("WIDtotal_amount");
+//        String total_amount = request.getParameter("WIDtotal_amount");
+        String total_amount = "30";
         //订单名称，必填
-        String subject = request.getParameter("WIDsubject");
+//        String subject = request.getParameter("WIDsubject");
+        String subject = "公告发布";
         //商品描述，可空
-        String body = request.getParameter("WIDbody");
+//        String body = request.getParameter("WIDbody");
+        String body = "30RMB " + SessionUtil.get(session).getE_RealName();
 
         alipayRequest.setBizContent("{\"out_trade_no\":\"" + out_trade_no + "\","
                 + "\"total_amount\":\"" + total_amount + "\","
@@ -73,8 +90,8 @@ public class AlipayControl {
         return "alipay/pay";
     }
 
-    @RequestMapping("/alipay.trade.query.jsp")
-    public String query(HttpServletRequest request, HttpServletResponse response) {
+    //查询订单交易是否成功
+    public static String query(String no) throws AlipayApiException {
         //获得初始化的AlipayClient
         AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id, AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key, AlipayConfig.sign_type);
 
@@ -82,17 +99,16 @@ public class AlipayControl {
         AlipayTradeQueryRequest alipayRequest = new AlipayTradeQueryRequest();
 
         //商户订单号，商户网站订单系统中唯一订单号
-        String out_trade_no = request.getParameter("WIDTQout_trade_no");
-        //支付宝交易号
-        String trade_no = request.getParameter("WIDTQtrade_no");
+//        String out_trade_no = request.getParameter("WIDTQout_trade_no");
+        String out_trade_no = no;
         //请二选一设置
 
-        alipayRequest.setBizContent("{\"out_trade_no\":\"" + out_trade_no + "\"," + "\"trade_no\":\"" + trade_no + "\"}");
+        alipayRequest.setBizContent("{\"out_trade_no\":\"" + out_trade_no + "\"}");
 
         //输出
-        execute(response, alipayClient, alipayRequest);
-
-        return "alipay/query";
+//        execute(response, alipayClient, alipayRequest);
+        String msg = "";
+        return alipayClient.execute(alipayRequest).getMsg();
     }
 
     @RequestMapping("/alipay.trade.refund.jsp")
@@ -251,7 +267,7 @@ public class AlipayControl {
 
     //页面跳转同步通知页面路径
     @RequestMapping("/alipay/return_url.jsp")
-    public String return_url(HttpServletRequest request) {
+    public String return_url(HttpServletRequest request, Model model) {
         /* *
          * 功能：支付宝服务器同步通知页面
          * 日期：2017-03-30
@@ -287,12 +303,19 @@ public class AlipayControl {
             //付款金额
             String total_amount = request.getParameter("total_amount");
 
+            model.addAttribute("out_trade_no", out_trade_no);
+            model.addAttribute("trade_no", trade_no);
+            model.addAttribute("total_amount", total_amount);
+
             System.out.println("trade_no:" + trade_no + "<br/>out_trade_no:" + out_trade_no + "<br/>total_amount:" + total_amount);
+            //——请在这里编写您的程序（以上代码仅作参考）——
+//        return "alipay/return_url";
+            return "announcementAdd";
+
         } else {
             System.out.println("验签失败");
+            return "index";
         }
-        //——请在这里编写您的程序（以上代码仅作参考）——
-        return "alipay/return_url";
     }
 
     private void requestParamsIterator(Map<String, String> params, Map<String, String[]> requestParams) {

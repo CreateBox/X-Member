@@ -20,4 +20,7 @@ public interface AnnouncementMapper {
 
     Integer addAnnouncement(Announcement announcement);
 
+    Integer getNoCount(@Param("t_no") String t_no);
+
+    Announcement getNo(@Param("t_no") String t_no);
 }

@@ -9,11 +9,19 @@ public class Announcement {
 
     private Integer t_Id;     //公告编码
     private String t_Title;    //公告标题
-    private Integer t_Type;   //公告类型
-    private Integer t_Name;   //发布人
+    private Employees t_Name;   //发布人
     private String t_Content;  //公告内容
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date t_Date;     //发布时间
+    private String t_no;
+
+    public String getT_no() {
+        return t_no;
+    }
+
+    public void setT_no(String t_no) {
+        this.t_no = t_no;
+    }
 
     public Integer getT_Id() {
         return t_Id;
@@ -31,19 +39,11 @@ public class Announcement {
         this.t_Title = t_Title;
     }
 
-    public Integer getT_Type() {
-        return t_Type;
-    }
-
-    public void setT_Type(Integer t_Type) {
-        this.t_Type = t_Type;
-    }
-
-    public Integer getT_Name() {
+    public Employees getT_Name() {
         return t_Name;
     }
 
-    public void setT_Name(Integer t_Name) {
+    public void setT_Name(Employees t_Name) {
         this.t_Name = t_Name;
     }
 

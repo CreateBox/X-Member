@@ -26,7 +26,7 @@ public class WebConfig extends WebMvcConfigurationSupport {
         //排除的路径
         addInterceptor.excludePathPatterns("/login**");
         //支付宝测试接口
-        addInterceptor.excludePathPatterns("/alipay**");
+//        addInterceptor.excludePathPatterns("/alipay**");
         addInterceptor.excludePathPatterns("/static/**");
         //拦截所有路径
         addInterceptor.addPathPatterns("/**");
