@@ -20,7 +20,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
         //跳转到登录页
-        response.sendRedirect("login.html");
+        response.sendRedirect("/login.html");
         return false;
     }
 }

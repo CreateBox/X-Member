@@ -52,10 +52,10 @@ public class AlipayControl {
 //        String out_trade_no = request.getParameter("WIDTCout_trade_no");
         //付款金额，必填
 //        String total_amount = request.getParameter("WIDtotal_amount");
-        String total_amount = "30";
+        String total_amount = "0.01";
         //订单名称，必填
 //        String subject = request.getParameter("WIDsubject");
-        String subject = "公告发布";
+        String subject = "公告发布 " + SessionUtil.get(session).getE_RealName();
         //商品描述，可空
 //        String body = request.getParameter("WIDbody");
         String body = "30RMB " + SessionUtil.get(session).getE_RealName();

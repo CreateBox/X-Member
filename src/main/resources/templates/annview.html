@@ -115,7 +115,7 @@
                 {"data": "t_Id"},
                 {
                     "data": "t_Title", "render": function (data, type, full, meta) {
-                        var zhi = "<a href='announcementlist?t_Title=" + data + "'>" + data + "</a>";
+                        var zhi = "<a href='javascript:0' onclick=\"x_admin_show('公告信息','/getAnnNo/" + full.t_no + "',1000,650)\" >" + data + "</a>";
                         return zhi;
                     }
                 },
