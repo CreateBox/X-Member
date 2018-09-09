@@ -252,7 +252,5 @@ CREATE TABLE announcement
 	t_no VARCHAR(50) NOT NULL COMMENT '订单号'
 );
 
-INSERT INTO announcement VALUE(DEFAULT,'2015年公司月会安排',1,'公司定于2013年12月20日举行公司年会，请......',NOW(),'123123123');
-INSERT INTO announcement VALUE(DEFAULT,'2014年公司年会安排',1,'公司定于2013年12月20日举行公司年会，请......',NOW(),'123123123');
-INSERT INTO announcement VALUE(DEFAULT,'2014年公司年会安排',1,'公司定于2013年12月20日举行公司年会，请......',NOW(),'123123123');
-INSERT INTO announcement VALUE(DEFAULT,'2014年公司年会安排',1,'公司定于2013年12月20日举行公司年会，请......',NOW(),'123123123');
+INSERT INTO announcement VALUE(DEFAULT,'2015年百度',1,'<img hidefocus="true" class="index-logo-src" src="//www.baidu.com/img/bd_logo1.png" width="270" height="129" usemap="#mp">',NOW(),'7777777');
+INSERT INTO announcement VALUE(DEFAULT,'2014年公司年会安排',1,'<h1 class="main-title">9日早新闻：马云要退休当老师？阿里回应称他在茅台出席活动</h1>',NOW(),'12580');
