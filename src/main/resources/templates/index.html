@@ -20,7 +20,7 @@
 <body>
 <!-- 顶部开始 -->
 <div class="container">
-    <div class="logo"><a href="/index.html">CRM</a></div>
+    <div class="logo"><a href="/">CRM</a></div>
     <div class="left_open">
         <i title="展开左侧栏" class="iconfont">&#xe699;</i>
     </div>
@@ -28,9 +28,12 @@
         <li class="layui-nav-item">
             <a href="javascript:;">+新增</a>
             <dl class="layui-nav-child"> <!-- 二级菜单 -->
-                <dd><a onclick="x_admin_show('资讯','http://www.baidu.com')"><i class="iconfont">&#xe6a2;</i>资讯</a></dd>
-                <dd><a onclick="x_admin_show('图片','http://www.baidu.com')"><i class="iconfont">&#xe6a8;</i>图片</a></dd>
-                <dd><a onclick="x_admin_show('用户','http://www.baidu.com')"><i class="iconfont">&#xe6b8;</i>用户</a></dd>
+                <dd><a onclick="x_admin_show(null,'/toAddser',600,590,true)"><i class="iconfont">&#xe6a2;</i>服务新增</a>
+                </dd>
+                <dd><a onclick="x_admin_show(null,'/jump/sysroleadd',600,470,true)"><i class="iconfont">&#xe6a8;</i>角色新增</a>
+                </dd>
+                <dd><a onclick="x_admin_show(null,'/toDicAdd',600,525,true)"><i class="iconfont">&#xe6b8;</i>数据字典新增
+                </a></dd>
             </dl>
         </li>
     </ul>
@@ -97,57 +100,57 @@
                     </li>
                 </ul>
             </li>
-            <li>
-                <a href="javascript:;">
-                    <i class="iconfont">&#xe723;</i>
-                    <cite>销售管理</cite>
-                    <i class="iconfont nav_right">&#xe697;</i>
-                </a>
-                <ul class="sub-menu">
-                    <li>
-                        <a _href="order-list.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>销售计划</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="order-list.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>销售预测</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="order-list.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>销售绩效</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="order-list.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>机会管理</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="order-list.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>联系人管理</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="order-list.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>竞争管理</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="order-list.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>销售分析</cite>
-                        </a>
-                    </li>
-                </ul>
-            </li>
+            <!--<li>-->
+            <!--<a href="javascript:;">-->
+            <!--<i class="iconfont">&#xe723;</i>-->
+            <!--<cite>销售管理</cite>-->
+            <!--<i class="iconfont nav_right">&#xe697;</i>-->
+            <!--</a>-->
+            <!--<ul class="sub-menu">-->
+            <!--<li>-->
+            <!--<a _href="order-list.html">-->
+            <!--<i class="iconfont">&#xe6a7;</i>-->
+            <!--<cite>销售计划</cite>-->
+            <!--</a>-->
+            <!--</li>-->
+            <!--<li>-->
+            <!--<a _href="order-list.html">-->
+            <!--<i class="iconfont">&#xe6a7;</i>-->
+            <!--<cite>销售预测</cite>-->
+            <!--</a>-->
+            <!--</li>-->
+            <!--<li>-->
+            <!--<a _href="order-list.html">-->
+            <!--<i class="iconfont">&#xe6a7;</i>-->
+            <!--<cite>销售绩效</cite>-->
+            <!--</a>-->
+            <!--</li>-->
+            <!--<li>-->
+            <!--<a _href="order-list.html">-->
+            <!--<i class="iconfont">&#xe6a7;</i>-->
+            <!--<cite>机会管理</cite>-->
+            <!--</a>-->
+            <!--</li>-->
+            <!--<li>-->
+            <!--<a _href="order-list.html">-->
+            <!--<i class="iconfont">&#xe6a7;</i>-->
+            <!--<cite>联系人管理</cite>-->
+            <!--</a>-->
+            <!--</li>-->
+            <!--<li>-->
+            <!--<a _href="order-list.html">-->
+            <!--<i class="iconfont">&#xe6a7;</i>-->
+            <!--<cite>竞争管理</cite>-->
+            <!--</a>-->
+            <!--</li>-->
+            <!--<li>-->
+            <!--<a _href="order-list.html">-->
+            <!--<i class="iconfont">&#xe6a7;</i>-->
+            <!--<cite>销售分析</cite>-->
+            <!--</a>-->
+            <!--</li>-->
+            <!--</ul>-->
+            <!--</li>-->
             <li>
                 <a href="javascript:;">
                     <i class="iconfont">&#xe723;</i>
@@ -208,60 +211,60 @@
                     </li>
                 </ul>
             </li>
-            <li>
-                <a href="javascript:;">
-                    <i class="iconfont">&#xe726;</i>
-                    <cite>订单管理</cite>
-                    <i class="iconfont nav_right">&#xe697;</i>
-                </a>
-                <ul class="sub-menu">
-                    <li>
-                        <a _href="admin-list.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>代下订单</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="admin-role.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>订单查询</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="admin-cate.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>订单统计</cite>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="javascript:;">
-                    <i class="iconfont">&#xe6ce;</i>
-                    <cite>合同管理</cite>
-                    <i class="iconfont nav_right">&#xe697;</i>
-                </a>
-                <ul class="sub-menu">
-                    <li>
-                        <a _href="echarts1.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>合同创建</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="echarts2.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>合同审核</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="echarts3.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>合同管理</cite>
-                        </a>
-                    </li>
-                </ul>
-            </li>
+            <!--<li>-->
+            <!--<a href="javascript:;">-->
+            <!--<i class="iconfont">&#xe726;</i>-->
+            <!--<cite>订单管理</cite>-->
+            <!--<i class="iconfont nav_right">&#xe697;</i>-->
+            <!--</a>-->
+            <!--<ul class="sub-menu">-->
+            <!--<li>-->
+            <!--<a _href="admin-list.html">-->
+            <!--<i class="iconfont">&#xe6a7;</i>-->
+            <!--<cite>代下订单</cite>-->
+            <!--</a>-->
+            <!--</li>-->
+            <!--<li>-->
+            <!--<a _href="admin-role.html">-->
+            <!--<i class="iconfont">&#xe6a7;</i>-->
+            <!--<cite>订单查询</cite>-->
+            <!--</a>-->
+            <!--</li>-->
+            <!--<li>-->
+            <!--<a _href="admin-cate.html">-->
+            <!--<i class="iconfont">&#xe6a7;</i>-->
+            <!--<cite>订单统计</cite>-->
+            <!--</a>-->
+            <!--</li>-->
+            <!--</ul>-->
+            <!--</li>-->
+            <!--<li>-->
+            <!--<a href="javascript:;">-->
+            <!--<i class="iconfont">&#xe6ce;</i>-->
+            <!--<cite>合同管理</cite>-->
+            <!--<i class="iconfont nav_right">&#xe697;</i>-->
+            <!--</a>-->
+            <!--<ul class="sub-menu">-->
+            <!--<li>-->
+            <!--<a _href="echarts1.html">-->
+            <!--<i class="iconfont">&#xe6a7;</i>-->
+            <!--<cite>合同创建</cite>-->
+            <!--</a>-->
+            <!--</li>-->
+            <!--<li>-->
+            <!--<a _href="echarts2.html">-->
+            <!--<i class="iconfont">&#xe6a7;</i>-->
+            <!--<cite>合同审核</cite>-->
+            <!--</a>-->
+            <!--</li>-->
+            <!--<li>-->
+            <!--<a _href="echarts3.html">-->
+            <!--<i class="iconfont">&#xe6a7;</i>-->
+            <!--<cite>合同管理</cite>-->
+            <!--</a>-->
+            <!--</li>-->
+            <!--</ul>-->
+            <!--</li>-->
             <li>
                 <a href="javascript:;">
                     <i class="iconfont">&#xe6b4;</i>
