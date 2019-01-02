@@ -1,7 +1,6 @@
 package com.manager.mapper;
 
 import com.manager.pojo.Announcement;
-import com.manager.pojo.DataDictionary;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
