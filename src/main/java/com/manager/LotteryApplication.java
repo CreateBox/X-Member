@@ -9,6 +9,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+/**
+ * @author Simon
+ */
 @SpringBootApplication
 @ComponentScan("com.manager")       //加载@Service @Control注解类
 @MapperScan(value = "com.manager.mapper")  //mybatis 需要扫描mapper接口
